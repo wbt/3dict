@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
       abi: [
         {
           inputs: [
@@ -112,6 +112,19 @@ const deployedContracts = {
         },
         {
           inputs: [],
+          name: "defaultSponsorFractionOfOptionPool",
+          outputs: [
+            {
+              internalType: "uint24",
+              name: "",
+              type: "uint24",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
           name: "gameSponsorMin",
           outputs: [
             {
@@ -193,6 +206,19 @@ const deployedContracts = {
           name: "setGreeting",
           outputs: [],
           stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "sponsorFractionOfQuestionPool",
+          outputs: [
+            {
+              internalType: "uint24",
+              name: "",
+              type: "uint24",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
