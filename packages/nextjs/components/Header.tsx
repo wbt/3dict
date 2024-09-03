@@ -93,8 +93,8 @@ export const Header = () => {
             <Image alt="3Dict logo" className="cursor-pointer" fill src="/crystal-ball-1--streamline-emoji.svg" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-ETH</span>
-            <span className="text-xs">Ethereum dev stack</span>
+            <span className="font-bold leading-tight">3Dict</span>
+            <span className="text-xs">Own your predictions</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
