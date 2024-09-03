@@ -28,7 +28,7 @@ contract App3Dict is Ownable{
 
 	// Constructor: Called once on contract deployment
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
-	constructor(address initialOwner)
+	constructor(address payable initialOwner)
 		Ownable(initialOwner)
 	{
 	}
