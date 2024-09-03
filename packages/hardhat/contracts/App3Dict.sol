@@ -28,8 +28,9 @@ contract App3Dict is Ownable{
 
 	// Constructor: Called once on contract deployment
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
-	constructor(address initialOwner) {
+	constructor(address initialOwner)
 		Ownable(initialOwner)
+	{
 	}
 
 	/**
@@ -66,7 +67,7 @@ contract App3Dict is Ownable{
 	 * The function can only be called by the owner of the contract as defined by the modifier
 	 */
 	function withdraw() public onlyOwner {
-		(bool success, ) = owner.call{ value: address(this).balance }("");
+		(bool success, ) = payable(owner()).call{ value: address(this).balance }("");
 		require(success, "Failed to send Ether");
 	}
 
