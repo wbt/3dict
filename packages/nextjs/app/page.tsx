@@ -22,10 +22,11 @@ const Home: NextPage = () => {
           <Address address={connectedAddress} />
         </div>
         <p className="text-center text-lg">
-          Get started by editing{" "}
-          <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-            packages/nextjs/app/page.tsx
-          </code>
+          &ldquo;Predict&rdquo;, version 1: What an &ldquo;expert&rdquo; decides gets published. (Read)
+          <br />
+          &ldquo;Predict&rdquo;, version 2: &ldquo;Post what you think in comments!&rdquo; (Read+Write)
+          <br />
+          &ldquo;Predict&rdquo;, version 3: Predictors and framers are accountable for (own) results! (Read+Write+Own)
         </p>
         <p className="text-center text-lg">
           Edit your smart contract{" "}
