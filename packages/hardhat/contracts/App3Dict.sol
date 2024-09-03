@@ -25,8 +25,8 @@ contract App3Dict is Ownable{
 	uint256 public questionSponsorMin;
 	uint24 public sponsorFractionOfQuestionPool = 20*100000; // A percentage (e.g. 20 for 20%) * 10^5
 	uint24 public defaultSponsorFractionOfOptionPool = 2*100000; // A percentage (e.g. 2 for 2%) * 10^5
-	uint PublicGoodsPoolUnpaidBalance = 0;
-	uint PublicGoodsPoolPaidOut = 0;
+	uint256 PublicGoodsPoolUnpaidBalance = 0;
+	uint256 PublicGoodsPoolPaidOut = 0;
 
 	// Events: a way to emit log statements from smart contract that can be listened to by external parties
 	event GreetingChange(
