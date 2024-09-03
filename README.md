@@ -1,3 +1,15 @@
+# 3Dict.app
+
+## Installation
+- Obtain permissions. This software is NOT LICENSED (proprietary) except that a limited license to use the software for the purpose of judging the ETHGlobal ETHOnline 2024 hackathon is granted to judges (including partner judges) during September 2024.
+- Clone this GitHub repo to your local machine.
+- `yarn install`
+- If you're on Windows with PowerShell, you may need to run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process` in each terminal first.
+- In one terminal, `yarn chain`
+- In another, `yarn deploy`
+- In another, `yarn start` for the frontend.
+
+Instructions below remain from Scaffold-ETH:
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">
