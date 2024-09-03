@@ -7,13 +7,18 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
       abi: [
         {
           inputs: [
             {
-              internalType: "address",
+              internalType: "address payable",
               name: "initialOwner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_baseToken",
               type: "address",
             },
           ],
@@ -91,6 +96,19 @@ const deployedContracts = {
           ],
           name: "OwnershipTransferred",
           type: "event",
+        },
+        {
+          inputs: [],
+          name: "baseToken",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
         },
         {
           inputs: [],

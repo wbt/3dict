@@ -17,6 +17,9 @@ contract App3Dict is Ownable{
 	bool public premium = false;
 	uint256 public totalCounter = 0;
 	mapping(address => uint) public userGreetingCounter;
+	// baseToken: The base unit other prices are denoted in,
+	// which becomes more important when using Chainlink price feeds to accept payment in various tokens
+	address public baseToken;
 
 	// Events: a way to emit log statements from smart contract that can be listened to by external parties
 	event GreetingChange(
@@ -30,9 +33,11 @@ contract App3Dict is Ownable{
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
 	constructor(
 		address payable initialOwner,
+		address _baseToken
 	)
 		Ownable(initialOwner)
 	{
+		baseToken = _baseToken;
 	}
 
 	/**

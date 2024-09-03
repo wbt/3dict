@@ -33,12 +33,13 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
   // Get the deployed contract to interact with it after deploying.
   const usdme = await hre.ethers.getContract<Contract>("USDME", deployer);
+  const usdmeAddr = await usdme.getAddress();
   console.log("Initial USDME balance of deployer:", await usdme.balanceOf(deployer));
 
   await deploy("App3Dict", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer],
+    args: [deployer, usdmeAddr],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
