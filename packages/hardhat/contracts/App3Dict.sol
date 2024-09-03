@@ -36,6 +36,42 @@ contract App3Dict is Ownable{
 		uint256 value
 	);
 
+	event BaseTokenChange(
+		address indexed oldBaseToken,
+		address indexed newBaseToken
+	);
+
+	event GameSponsorMinChange(
+		uint256 oldValue,
+		uint256 newValue
+	);
+
+	event QuestionSponsorMinChange(
+		uint256 oldValue,
+		uint256 newValue
+	);
+
+	event sponsorFractionOfQuestionPoolChange(
+		uint24 oldValue,
+		uint24 newValue
+	);
+
+	event defaultSponsorFractionOfOptionPoolChange(
+		uint24 oldValue,
+		uint24 newValue
+	);
+
+	event publicGoodsPoolDonationReceived(
+		uint256 amountDonated,
+		uint256 newPublicGoodsPoolUnpaidBalance
+	);
+
+	event publicGoodsPoolPayout(
+		address paidTo,
+		uint256 amountPaidOut,
+		uint256 newTotalPaidOut
+	);
+
 	// Constructor: Called once on contract deployment
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
 	constructor(
