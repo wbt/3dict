@@ -5,6 +5,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 /**
  * A smart contract that allows changing a state variable of the contract and tracking the changes
@@ -19,7 +20,9 @@ contract App3Dict is Ownable{
 	mapping(address => uint) public userGreetingCounter;
 	// baseToken: The base unit other prices are denoted in,
 	// which becomes more important when using Chainlink price feeds to accept payment in various tokens
-	address public baseToken;
+	ERC20 public baseToken;
+	uint256 public gameSponsorMin;
+	uint256 public questionSponsorMin;
 
 	// Events: a way to emit log statements from smart contract that can be listened to by external parties
 	event GreetingChange(
@@ -33,11 +36,15 @@ contract App3Dict is Ownable{
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
 	constructor(
 		address payable initialOwner,
-		address _baseToken
+		ERC20 _baseToken
 	)
 		Ownable(initialOwner)
 	{
 		baseToken = _baseToken;
+		// NOTE: The .decimals() function is not part of the ERC-20 standard interface (IERC20)!
+		// Verify support before using any particular token in the constructor.
+		gameSponsorMin = 100 * 10 ** ERC20(baseToken).decimals();
+		questionSponsorMin = 5 * 10 ** ERC20(baseToken).decimals();
 	}
 
 	/**
