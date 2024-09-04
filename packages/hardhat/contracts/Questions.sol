@@ -503,6 +503,14 @@ contract Questions is PayableOwnable {
 		);
 	}
 
+	function markUnresolvableByReferee(
+		uint rowID
+	) public onlyReferee(rowID) {
+		_markUnresolvable(
+			rowID
+		);
+	}
+
 	// TODO: Add fn allowing referees in aggregate to mark unresolvable
 
 	//Solidity can't figure out the type when passing [] inline
@@ -522,7 +530,15 @@ contract Questions is PayableOwnable {
 		//TODO: There's more to do here! Joint private fn shared with _resolve().
 	}
 
-	// TODO: Add fn allowing referees in aggregate to resolve
+	function resolve(
+		uint rowID,
+		uint16[] calldata resolutionFractions
+	) public onlyReferee(rowID) {
+		_resolve(
+			rowID,
+			resolutionFractions
+		);
+	}
 
 	function _resolve(
 		uint rowID,
