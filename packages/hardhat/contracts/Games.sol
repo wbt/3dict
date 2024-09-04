@@ -2,9 +2,10 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 import "./IGamesController.sol";
+import "./IQuestionsController.sol";
 import "./PayableOwnable.sol";
 
-contract Games is PayableOwnable {
+contract Games is PayableOwnable, IQuestionsController {
 
 	struct Game {
 		address lister;
@@ -680,6 +681,37 @@ contract Games is PayableOwnable {
 			newValue
 		);
 		rows[rowID].listEnd = newValue;
+	}
+
+	// If changing away from the controller architecture,
+	// might need to change visibility here to public.
+	function isAllowedToList(
+		uint gameID,
+		address potentialLister
+	) external view returns (bool) {
+		int8 approvalStatus = rows[gameID].askerApprovals[potentialLister];
+		return (
+			approvalStatus > 0 ||
+			(rows[gameID].openToAnyAsker && approvalStatus >= 0)
+		);
+	}
+
+	function gameToken(
+		uint gameID
+	) external view returns (IERC20) {
+		return rows[gameID].gameToken;
+	}
+
+	function maxQuestionBid(
+		uint gameID
+	) external view returns (uint) {
+		return rows[gameID].maxQuestionBid;
+	}
+
+	function sponsorFractionOfOptionPool(
+		uint gameID
+	) external view returns (uint24) {
+		return rows[gameID].sponsorFractionOfOptionPool;
 	}
 
 }
