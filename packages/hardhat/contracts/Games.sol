@@ -45,14 +45,14 @@ contract Games is PayableOwnable {
 	);
 
 	event ControllerChanged(
-		IGamesController indexed oldController,
-		IGamesController indexed newController
+		IGamesController indexed oldValue,
+		IGamesController indexed newValue
 	);
 
 	event ListerChanged(
 		uint indexed rowID,
-		address indexed oldLister,
-		address indexed newLister
+		address indexed oldValue,
+		address indexed newValue
 	);
 
 	event SponsorshipAdded(
