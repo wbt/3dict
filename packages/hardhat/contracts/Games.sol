@@ -205,7 +205,7 @@ contract Games is PayableOwnable {
 		controller = newController;
 	}
 
-	function addGame(
+	function create(
 		address lister
 	) public {
 		require(
