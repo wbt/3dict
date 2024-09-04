@@ -98,16 +98,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	)
 		PayableOwnable(initialOwner)
 	{
-		_baseToken = baseTokenToSet;
+		_changeBaseToken(baseTokenToSet);
 		// NOTE: The .decimals() function is not part of the ERC-20 standard interface (IERC20)!
 		// Verify support before using any particular token in the constructor.
-		gameSponsorMin = 100 * 10 ** ERC20(_baseToken).decimals();
-		questionSponsorMin = 5 * 10 ** ERC20(_baseToken).decimals();
-		defaultMaxQuestionBid = 100 * 10 ** ERC20(_baseToken).decimals();
-		emit BaseTokenChanged(ERC20(address(0)), _baseToken);
-		emit GameSponsorMinChanged(0, gameSponsorMin);
-		emit QuestionSponsorMinChanged(0, questionSponsorMin);
-		emit DefaultMaxQuestionBidChanged(0, defaultMaxQuestionBid);
+		_changeGameSponsorMin(100 * 10 ** ERC20(_baseToken).decimals());
+		_changeQuestionSponsorMin(5 * 10 ** ERC20(_baseToken).decimals());
+		_changeDefaultMaxQuestionBid(100 * 10 ** ERC20(_baseToken).decimals());
 	}
 
 	function baseToken() public view returns (IERC20) {
