@@ -223,8 +223,8 @@ contract App3Dict is Ownable{
 	 * Function that allows the owner to withdraw all the Ether in the contract
 	 * The function can only be called by the owner of the contract as defined by the modifier
 	 */
-	function withdraw() public onlyOwner {
-		(bool success, ) = payable(owner()).call{ value: address(this).balance }("");
+	function payoutEth(address payable recipient) public onlyOwner {
+		(bool success, ) = payable(recipient).call{ value: address(this).balance }("");
 		require(success, "Failed to send Ether");
 	}
 

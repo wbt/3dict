@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      address: "0x9A676e781A523b5d0C0e43731313A708CB607508",
       abi: [
         {
           inputs: [
@@ -507,6 +507,19 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "address payable",
+              name: "recipient",
+              type: "address",
+            },
+          ],
+          name: "payoutEth",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "address",
               name: "payTo",
               type: "address",
@@ -603,13 +616,6 @@ const deployedContracts = {
             },
           ],
           name: "transferOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "withdraw",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
