@@ -61,8 +61,14 @@ contract App3Dict is Ownable{
 		uint24 newValue
 	);
 
+	event tipReceived(
+		address donor,
+		uint256 amount
+	);
+
 	event publicGoodsPoolDonationReceived(
-		uint256 amountDonated,
+		address donor,
+		uint256 amount,
 		uint256 newPublicGoodsPoolUnpaidBalance
 	);
 
@@ -70,6 +76,11 @@ contract App3Dict is Ownable{
 		address paidTo,
 		uint256 amountPaidOut,
 		uint256 newTotalPaidOut
+	);
+
+	event baseTokensPayout(
+		address paidTo,
+		uint256 amountPaidOut
 	);
 
 	// Constructor: Called once on contract deployment
@@ -114,6 +125,58 @@ contract App3Dict is Ownable{
 
 		// emit: keyword used to trigger an event
 		emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, msg.value);
+	}
+
+	function donateToPublicGoods(
+			uint256 amount
+	) public {
+		publicGoodsPoolUnpaidBalance += amount;
+		emit publicGoodsPoolDonationReceived(
+			msg.sender, //must have prior allowance
+			amount,
+			publicGoodsPoolUnpaidBalance
+		);
+		require(baseToken.transferFrom(msg.sender, address(this), amount), 'Donation transfer failed.');
+	}
+
+	function tip(
+			uint256 amount
+	) public {
+		emit tipReceived(
+			msg.sender, //must have prior allowance
+			amount
+		);
+		require(baseToken.transferFrom(msg.sender, address(this), amount), 'Tip transfer failed.');
+	}
+
+	function payoutPublicGoods(
+			address payTo,
+			uint256 payAmount
+	) public onlyOwner {
+		require(payAmount <= publicGoodsPoolUnpaidBalance, 'Insufficient funds in public goods pool!');
+		emit publicGoodsPoolPayout(
+			payTo,
+			payAmount,
+			publicGoodsPoolPaidOut + payAmount
+		);
+		publicGoodsPoolPaidOut += payAmount;
+		publicGoodsPoolUnpaidBalance -= payAmount;
+		baseToken.transfer(payTo, payAmount);
+	}
+
+	function payoutBaseTokens(
+		address payTo,
+		uint256 payAmount
+	) public onlyOwner {
+		require(
+			payAmount <= (baseToken.balanceOf(address(this))-publicGoodsPoolUnpaidBalance),
+			'Insufficient funds to make the requested withdrawal!'
+		);
+		emit baseTokensPayout(
+			payTo,
+			payAmount
+		);
+		baseToken.transfer(payTo, payAmount);
 	}
 
 	/**
