@@ -4,7 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./PayableOwnable.sol";
 
 contract Locations is PayableOwnable {
-	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty reference
+
 	struct Location {
 		// TODO: Consider if some of these need to be immutable?
 		// Work through all the implications of mutability.
@@ -21,6 +21,8 @@ contract Locations is PayableOwnable {
 		string title140; // Up to 140 character title
 		string descr500; // Up to 500 character description
 	}
+
+	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty reference
 	mapping(uint256 => Location) rows;
 
 	event Creation(

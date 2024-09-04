@@ -5,8 +5,7 @@ import "./IGamesController.sol";
 import "./PayableOwnable.sol";
 
 contract Games is PayableOwnable {
-	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty reference
-	IGamesController controller;
+
 	struct Game {
 		address lister;
 		mapping(address => uint) sponsors; // uint is amount sponsored, in base tokens.
@@ -38,6 +37,9 @@ contract Games is PayableOwnable {
 		uint listStart; // for example, the published start time of a sports game.
 		uint listEnd;
 	}
+
+	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty reference
+	IGamesController controller;
 	mapping(uint256 => Game) rows;
 
 	event Creation(
