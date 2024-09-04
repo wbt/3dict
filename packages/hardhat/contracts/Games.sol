@@ -64,7 +64,7 @@ contract Games is PayableOwnable {
 		address indexed sponsor,
 		uint amountAdded,
 		uint totalSponsorshipFromThisSponsor,
-		uint totalSponsorship
+		uint totalSponsoredAmount
 	);
 
 	event CheckInStartChanged(
