@@ -437,4 +437,25 @@ contract Games is PayableOwnable {
 		games[gameID].checkInRequired = newValue;
 	}
 
+	function changeOpenToAnyAsker(
+		uint gameID,
+		bool newValue
+	) public onlyLister(gameID) {
+		_changeOpenToAnyAsker(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeOpenToAnyAsker(
+		uint gameID,
+		bool newValue
+	) private {
+		emit OpenToAnyAskerChanged(
+			gameID,
+			games[gameID].openToAnyAsker,
+			newValue
+		);
+		games[gameID].openToAnyAsker = newValue;
+	}
 }
