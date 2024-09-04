@@ -484,4 +484,26 @@ contract Games is PayableOwnable {
 		);
 		games[gameID].sponsorFractionOfOptionPool = newValue;
 	}
+
+	function changeMaxQuestionBid(
+		uint gameID,
+		uint newValue
+	) public onlyLister(gameID) {
+		_changeMaxQuestionBid(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeMaxQuestionBid(
+		uint gameID,
+		uint newValue
+	) private {
+		emit MaxQuestionBidChanged(
+			gameID,
+			games[gameID].maxQuestionBid,
+			newValue
+		);
+		games[gameID].maxQuestionBid = newValue;
+	}
 }
