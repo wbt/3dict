@@ -415,4 +415,26 @@ contract Games is PayableOwnable {
 		games[gameID].gameToken = newToken;
 	}
 
+	function changeCheckInRequired(
+		uint gameID,
+		bool newValue
+	) public onlyLister(gameID) {
+		_changeCheckInRequired(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeCheckInRequired(
+		uint gameID,
+		bool newValue
+	) private {
+		emit CheckInRequiredChanged(
+			gameID,
+			games[gameID].checkInRequired,
+			newValue
+		);
+		games[gameID].checkInRequired = newValue;
+	}
+
 }
