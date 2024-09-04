@@ -12,5 +12,6 @@ interface IGamesController {
 
 		function defaultMaxQuestionBid() external view returns (uint256);
 
-		function defaultSponsorFractionOfOptionPool() external view returns(uint24);
+		function defaultSponsorFractionOfOptionPool() external view returns (uint24);
+
 }
