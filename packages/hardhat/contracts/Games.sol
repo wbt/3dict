@@ -37,7 +37,7 @@ contract Games is PayableOwnable {
 		uint listStart; // for example, the published start time of a sports game.
 		uint listEnd;
 	}
-	mapping(uint256 => Game) games;
+	mapping(uint256 => Game) rows;
 
 	event GameAdded(
 		address indexed lister,
@@ -166,7 +166,7 @@ contract Games is PayableOwnable {
 	}
 
 	function _checkLister(uint rowID) internal view virtual {
-		if (games[rowID].lister != msg.sender) {
+		if (rows[rowID].lister != msg.sender) {
 			revert PropertyChangeAttemptByNonLister(_msgSender());
 		}
 	}
@@ -237,10 +237,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit ListerChanged(
 			rowID,
-			games[rowID].lister,
+			rows[rowID].lister,
 			newLister
 		);
-		games[rowID].lister = newLister;
+		rows[rowID].lister = newLister;
 	}
 
 	function addSponsorship(
@@ -248,17 +248,17 @@ contract Games is PayableOwnable {
 		uint amountToAdd,
 		address sponsor
 	) public {
-		games[rowID].sponsors[sponsor] += amountToAdd;
-		games[rowID].totalSponsoredAmount += amountToAdd;
+		rows[rowID].sponsors[sponsor] += amountToAdd;
+		rows[rowID].totalSponsoredAmount += amountToAdd;
 		emit SponsorshipAdded(
 			rowID,
 			sponsor,
 			amountToAdd,
-			games[rowID].sponsors[sponsor],
-			games[rowID].totalSponsoredAmount
+			rows[rowID].sponsors[sponsor],
+			rows[rowID].totalSponsoredAmount
 		);
 		require(
-			games[rowID].gameToken.transferFrom(msg.sender, address(controller), amountToAdd),
+			rows[rowID].gameToken.transferFrom(msg.sender, address(controller), amountToAdd),
 			'Sponsorship addition failed.'
 		);
 	}
@@ -279,10 +279,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit CheckInStartChanged(
 			rowID,
-			games[rowID].checkInStart,
+			rows[rowID].checkInStart,
 			newValue
 		);
-		games[rowID].checkInStart = newValue;
+		rows[rowID].checkInStart = newValue;
 	}
 
 	function changeEndTime(
@@ -301,10 +301,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit EndTimeChanged(
 			rowID,
-			games[rowID].endTime,
+			rows[rowID].endTime,
 			newValue
 		);
-		games[rowID].endTime = newValue;
+		rows[rowID].endTime = newValue;
 	}
 
 	function changeLocationID(
@@ -323,10 +323,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit LocationIDChanged(
 			rowID,
-			games[rowID].locationID,
+			rows[rowID].locationID,
 			newValue
 		);
-		games[rowID].locationID = newValue;
+		rows[rowID].locationID = newValue;
 	}
 
 	function addReferee(
@@ -344,13 +344,13 @@ contract Games is PayableOwnable {
 		address referee
 	) private {
 		bool found = false;
-		for(uint i = 0; i<games[rowID].referees.length; i++) {
-			if(games[rowID].referees[i] == referee) {
+		for(uint i = 0; i<rows[rowID].referees.length; i++) {
+			if(rows[rowID].referees[i] == referee) {
 				found = true;
 			}
 		}
 		if(!found) {
-			games[rowID].referees.push(referee);
+			rows[rowID].referees.push(referee);
 			emit RefereeAdded(
 				rowID,
 				referee
@@ -374,19 +374,19 @@ contract Games is PayableOwnable {
 	) private {
 		bool found = false;
 		uint foundAt = 0;
-		for(uint i = 0; i<games[rowID].referees.length; i++) {
-			if(games[rowID].referees[i] == referee) {
+		for(uint i = 0; i<rows[rowID].referees.length; i++) {
+			if(rows[rowID].referees[i] == referee) {
 				found = true;
 				foundAt = i;
 			}
 		}
 		if(found) {
-			if(foundAt < games[rowID].referees.length-1) {
+			if(foundAt < rows[rowID].referees.length-1) {
 				//if not the last element in the array, move the last element into the place being vacated
-				games[rowID].referees[foundAt] = games[rowID].referees[games[rowID].referees.length-1];
+				rows[rowID].referees[foundAt] = rows[rowID].referees[rows[rowID].referees.length-1];
 			}
 			//Then drop the last element
-			games[rowID].referees.pop();
+			rows[rowID].referees.pop();
 			emit RefereeRemoved(
 				rowID,
 				referee
@@ -414,10 +414,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit GameTokenChanged(
 			rowID,
-			games[rowID].gameToken,
+			rows[rowID].gameToken,
 			newToken
 		);
-		games[rowID].gameToken = newToken;
+		rows[rowID].gameToken = newToken;
 	}
 
 	function changeCheckInRequired(
@@ -436,10 +436,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit CheckInRequiredChanged(
 			rowID,
-			games[rowID].checkInRequired,
+			rows[rowID].checkInRequired,
 			newValue
 		);
-		games[rowID].checkInRequired = newValue;
+		rows[rowID].checkInRequired = newValue;
 	}
 
 	function changeOpenToAnyAsker(
@@ -458,10 +458,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit OpenToAnyAskerChanged(
 			rowID,
-			games[rowID].openToAnyAsker,
+			rows[rowID].openToAnyAsker,
 			newValue
 		);
-		games[rowID].openToAnyAsker = newValue;
+		rows[rowID].openToAnyAsker = newValue;
 	}
 
 	function changeSponsorFractionOfOptionPool(
@@ -480,10 +480,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit SponsorFractionOfOptionPoolChanged(
 			rowID,
-			games[rowID].sponsorFractionOfOptionPool,
+			rows[rowID].sponsorFractionOfOptionPool,
 			newValue
 		);
-		games[rowID].sponsorFractionOfOptionPool = newValue;
+		rows[rowID].sponsorFractionOfOptionPool = newValue;
 	}
 
 	function changeMaxQuestionBid(
@@ -502,10 +502,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit MaxQuestionBidChanged(
 			rowID,
-			games[rowID].maxQuestionBid,
+			rows[rowID].maxQuestionBid,
 			newValue
 		);
-		games[rowID].maxQuestionBid = newValue;
+		rows[rowID].maxQuestionBid = newValue;
 	}
 
 	function changeAskerApproval(
@@ -528,10 +528,10 @@ contract Games is PayableOwnable {
 		emit AskerApprovalChanged(
 			rowID,
 			asker,
-			games[rowID].askerApprovals[asker],
+			rows[rowID].askerApprovals[asker],
 			newValue
 		);
-		games[rowID].askerApprovals[asker] = newValue;
+		rows[rowID].askerApprovals[asker] = newValue;
 	}
 
 	function changeImageURI(
@@ -550,10 +550,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit ImageURIChanged(
 			rowID,
-			games[rowID].imageURI,
+			rows[rowID].imageURI,
 			newValue
 		);
-		games[rowID].imageURI = newValue;
+		rows[rowID].imageURI = newValue;
 	}
 
 	function changeTitle140(
@@ -572,10 +572,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit Title140Changed(
 			rowID,
-			games[rowID].title140,
+			rows[rowID].title140,
 			newValue
 		);
-		games[rowID].title140 = newValue;
+		rows[rowID].title140 = newValue;
 	}
 
 	function changeDescr500(
@@ -594,10 +594,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit Descr500Changed(
 			rowID,
-			games[rowID].descr500,
+			rows[rowID].descr500,
 			newValue
 		);
-		games[rowID].descr500 = newValue;
+		rows[rowID].descr500 = newValue;
 	}
 
 	function changeListStart(
@@ -616,10 +616,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit ListStartChanged(
 			rowID,
-			games[rowID].listStart,
+			rows[rowID].listStart,
 			newValue
 		);
-		games[rowID].listStart = newValue;
+		rows[rowID].listStart = newValue;
 	}
 
 	function changeListEnd(
@@ -638,10 +638,10 @@ contract Games is PayableOwnable {
 	) private {
 		emit ListEndChanged(
 			rowID,
-			games[rowID].listEnd,
+			rows[rowID].listEnd,
 			newValue
 		);
-		games[rowID].listEnd = newValue;
+		rows[rowID].listEnd = newValue;
 	}
 
 }
