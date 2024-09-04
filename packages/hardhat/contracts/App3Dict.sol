@@ -95,6 +95,9 @@ contract App3Dict is Ownable{
 		// Verify support before using any particular token in the constructor.
 		gameSponsorMin = 100 * 10 ** ERC20(baseToken).decimals();
 		questionSponsorMin = 5 * 10 ** ERC20(baseToken).decimals();
+		emit BaseTokenChange(ERC20(address(0)), baseToken);
+		emit GameSponsorMinChange(0, gameSponsorMin);
+		emit QuestionSponsorMinChange(0, questionSponsorMin);
 	}
 
 	// Use with caution, especially if base token isn't a 1:1 value to the old!
