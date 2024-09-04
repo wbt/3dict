@@ -172,7 +172,7 @@ contract Questions is PayableOwnable {
 
 	function _checkIsAllowedToList(uint gameID) internal view virtual {
 		if (!controller.isAllowedToList(gameID, msg.sender)) {
-			revert PropertyChangeAttemptByNonLister(_msgSender());
+			revert PropertyChangeAttemptByNonLister(msg.sender);
 		}
 	}
 
@@ -183,7 +183,7 @@ contract Questions is PayableOwnable {
 
 	function _checkLister(uint rowID) internal view virtual {
 		if (rows[rowID].lister != msg.sender) {
-			revert PropertyChangeAttemptByNonLister(_msgSender());
+			revert PropertyChangeAttemptByNonLister(msg.sender);
 		}
 	}
 
