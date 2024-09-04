@@ -280,6 +280,28 @@ contract Games is PayableOwnable {
 		games[gameID].checkInStart = newValue;
 	}
 
+	function changeEndTime(
+		uint gameID,
+		uint newValue
+	) public onlyLister(gameID) {
+		_changeEndTime(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeEndTime(
+		uint gameID,
+		uint newValue
+	) private {
+		emit EndTimeChanged(
+			gameID,
+			games[gameID].endTime,
+			newValue
+		);
+		games[gameID].endTime = newValue;
+	}
+
 	/* TODO: Work through all the implications
 	* of allowing a change to the game token
 	* before enabling this function.
