@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
       abi: [
         {
           inputs: [
@@ -52,13 +52,13 @@ const deployedContracts = {
           inputs: [
             {
               indexed: true,
-              internalType: "address",
+              internalType: "contract ERC20",
               name: "oldBaseToken",
               type: "address",
             },
             {
               indexed: true,
-              internalType: "address",
+              internalType: "contract ERC20",
               name: "newBaseToken",
               type: "address",
             },
@@ -159,6 +159,25 @@ const deployedContracts = {
           inputs: [
             {
               indexed: false,
+              internalType: "address",
+              name: "paidTo",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaidOut",
+              type: "uint256",
+            },
+          ],
+          name: "baseTokensPayout",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
               internalType: "uint24",
               name: "oldValue",
               type: "uint24",
@@ -178,8 +197,14 @@ const deployedContracts = {
           inputs: [
             {
               indexed: false,
+              internalType: "address",
+              name: "donor",
+              type: "address",
+            },
+            {
+              indexed: false,
               internalType: "uint256",
-              name: "amountDonated",
+              name: "amount",
               type: "uint256",
             },
             {
@@ -237,6 +262,25 @@ const deployedContracts = {
           type: "event",
         },
         {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "donor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "tipReceived",
+          type: "event",
+        },
+        {
           inputs: [],
           name: "baseToken",
           outputs: [
@@ -250,6 +294,71 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [
+            {
+              internalType: "contract ERC20",
+              name: "newBaseToken",
+              type: "address",
+            },
+          ],
+          name: "changeBaseToken",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint24",
+              name: "newValue",
+              type: "uint24",
+            },
+          ],
+          name: "changeDefaultSponsorFractionOfOptionPool",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeGameSponsorMin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeQuestionSponsorMin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint24",
+              name: "newValue",
+              type: "uint24",
+            },
+          ],
+          name: "changeSponsorFractionOfQuestionPool",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
           inputs: [],
           name: "defaultSponsorFractionOfOptionPool",
           outputs: [
@@ -260,6 +369,19 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "donateToPublicGoods",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -299,6 +421,42 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "payTo",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "payAmount",
+              type: "uint256",
+            },
+          ],
+          name: "payoutBaseTokens",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "payTo",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "payAmount",
+              type: "uint256",
+            },
+          ],
+          name: "payoutPublicGoods",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -384,6 +542,19 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "tip",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {

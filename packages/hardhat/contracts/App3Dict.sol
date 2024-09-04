@@ -37,8 +37,8 @@ contract App3Dict is Ownable{
 	);
 
 	event BaseTokenChange(
-		address indexed oldBaseToken,
-		address indexed newBaseToken
+		ERC20 indexed oldBaseToken,
+		ERC20 indexed newBaseToken
 	);
 
 	event GameSponsorMinChange(
@@ -125,6 +125,57 @@ contract App3Dict is Ownable{
 
 		// emit: keyword used to trigger an event
 		emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, msg.value);
+	}
+
+	// Use with caution, especially if base token isn't a 1:1 value to the old!
+	function changeBaseToken(
+		ERC20 newBaseToken
+	) public onlyOwner {
+		emit BaseTokenChange(
+			baseToken,
+			newBaseToken
+		);
+		baseToken = newBaseToken;
+	}
+
+	function changeGameSponsorMin(
+			uint256 newValue
+	) public onlyOwner {
+		emit GameSponsorMinChange(
+			gameSponsorMin,
+			newValue
+		);
+		gameSponsorMin = newValue;
+	}
+
+	function changeQuestionSponsorMin(
+			uint256 newValue
+	) public onlyOwner {
+		emit QuestionSponsorMinChange(
+			questionSponsorMin,
+			newValue
+		);
+		questionSponsorMin = newValue;
+	}
+
+	function changeSponsorFractionOfQuestionPool(
+			uint24 newValue
+	) public onlyOwner {
+		emit sponsorFractionOfQuestionPoolChange(
+			sponsorFractionOfQuestionPool,
+			newValue
+		);
+		sponsorFractionOfQuestionPool = newValue;
+	}
+
+	function changeDefaultSponsorFractionOfOptionPool(
+			uint24 newValue
+	) public onlyOwner {
+		emit defaultSponsorFractionOfOptionPoolChange(
+			defaultSponsorFractionOfOptionPool,
+			newValue
+		);
+		defaultSponsorFractionOfOptionPool = newValue;
 	}
 
 	function donateToPublicGoods(
