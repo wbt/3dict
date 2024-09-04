@@ -518,9 +518,12 @@ contract Questions is PayableOwnable {
 		uint16[] calldata resolutionFractions
 	) private {
 		require(resolutionFractions.length == rows[rowID].options.length, 'Invalid length of resolutionFractions parameter.');
+		uint16 sum = 0;
 		for(uint8 i=0; i<resolutionFractions.length; i++) {
 			require(!(rows[rowID].optionRemoved[i] && resolutionFractions[i] > 0), 'ResolutionFractions specifies nonzero value for removed option.');
+			sum += resolutionFractions[i];
 		}
+		require(sum == 10000, 'Invalid sum of resolutionFractions.');
 		emit Resolved(
 			rowID,
 			false,
