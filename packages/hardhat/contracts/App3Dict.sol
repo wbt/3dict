@@ -9,13 +9,14 @@ import "hardhat/console.sol";
 
 import "./IGamesController.sol";
 import "./PayableOwnable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract App3Dict is PayableOwnable, IGamesController {
 	// State Variables
 	// baseToken: The base unit other prices are denoted in,
 	// which becomes more important when using Chainlink price feeds to accept payment in various tokens
-	ERC20 public baseToken;
+	ERC20 private _baseToken; //baseToken() getter returns IERC20
 	uint256 public gameSponsorMin;
 	uint256 public questionSponsorMin;
 	uint24 public sponsorFractionOfQuestionPool = 20*100000; // A percentage (e.g. 20 for 20%) * 10^5
@@ -26,8 +27,8 @@ contract App3Dict is PayableOwnable, IGamesController {
 	mapping(address => bool) public approvedListers;
 
 	event BaseTokenChange(
-		ERC20 indexed oldBaseToken,
-		ERC20 indexed newBaseToken
+		IERC20 indexed oldBaseToken,
+		IERC20 indexed newBaseToken
 	);
 
 	event GameSponsorMinChange(
@@ -87,18 +88,22 @@ contract App3Dict is PayableOwnable, IGamesController {
 	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
 	constructor(
 		address payable initialOwner,
-		ERC20 _baseToken
+		ERC20 baseTokenToSet
 	)
 		PayableOwnable(initialOwner)
 	{
-		baseToken = _baseToken;
+		_baseToken = baseTokenToSet;
 		// NOTE: The .decimals() function is not part of the ERC-20 standard interface (IERC20)!
 		// Verify support before using any particular token in the constructor.
-		gameSponsorMin = 100 * 10 ** ERC20(baseToken).decimals();
-		questionSponsorMin = 5 * 10 ** ERC20(baseToken).decimals();
-		emit BaseTokenChange(ERC20(address(0)), baseToken);
+		gameSponsorMin = 100 * 10 ** ERC20(_baseToken).decimals();
+		questionSponsorMin = 5 * 10 ** ERC20(_baseToken).decimals();
+		emit BaseTokenChange(ERC20(address(0)), _baseToken);
 		emit GameSponsorMinChange(0, gameSponsorMin);
 		emit QuestionSponsorMinChange(0, questionSponsorMin);
+	}
+
+	function baseToken() public view returns (IERC20) {
+		return _baseToken;
 	}
 
 	// Use with caution, especially if base token isn't a 1:1 value to the old!
@@ -106,10 +111,10 @@ contract App3Dict is PayableOwnable, IGamesController {
 		ERC20 newBaseToken
 	) public onlyOwner {
 		emit BaseTokenChange(
-			baseToken,
+			_baseToken,
 			newBaseToken
 		);
-		baseToken = newBaseToken;
+		_baseToken = newBaseToken;
 	}
 
 	function changeGameSponsorMin(
@@ -183,7 +188,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 			amount,
 			publicGoodsPoolUnpaidBalance
 		);
-		require(baseToken.transferFrom(msg.sender, address(this), amount), 'Donation transfer failed.');
+		require(_baseToken.transferFrom(msg.sender, address(this), amount), 'Donation transfer failed.');
 	}
 
 	function tip(
@@ -193,7 +198,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 			msg.sender, //must have prior allowance
 			amount
 		);
-		require(baseToken.transferFrom(msg.sender, address(this), amount), 'Tip transfer failed.');
+		require(_baseToken.transferFrom(msg.sender, address(this), amount), 'Tip transfer failed.');
 	}
 
 	function payoutPublicGoods(
@@ -208,7 +213,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 		);
 		publicGoodsPoolPaidOut += payAmount;
 		publicGoodsPoolUnpaidBalance -= payAmount;
-		require(baseToken.transfer(payTo, payAmount), 'Public goods payout failed.');
+		require(_baseToken.transfer(payTo, payAmount), 'Public goods payout failed.');
 	}
 
 	function payoutBaseTokens(
@@ -216,14 +221,14 @@ contract App3Dict is PayableOwnable, IGamesController {
 		uint256 payAmount
 	) public onlyOwner {
 		require(
-			payAmount <= (baseToken.balanceOf(address(this))-publicGoodsPoolUnpaidBalance),
+			payAmount <= (_baseToken.balanceOf(address(this))-publicGoodsPoolUnpaidBalance),
 			'Insufficient funds to make the requested withdrawal!'
 		);
 		emit BaseTokensPayout(
 			payTo,
 			payAmount
 		);
-		require(baseToken.transfer(payTo, payAmount), 'Payout failed.');
+		require(_baseToken.transfer(payTo, payAmount), 'Payout failed.');
 	}
 
 	function withdrawERC20Tokens(
