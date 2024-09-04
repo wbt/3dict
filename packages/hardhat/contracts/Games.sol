@@ -696,6 +696,18 @@ contract Games is PayableOwnable, IQuestionsController {
 		);
 	}
 
+	function isRefereeFor(
+		uint gameID,
+		address potentialReferee
+	) external view returns (bool) {
+		for(uint i=0; i<rows[gameID].referees.length; i++) {
+			if(rows[gameID].referees[i] == potentialReferee) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	function gameToken(
 		uint gameID
 	) external view returns (IERC20) {

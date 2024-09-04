@@ -8,6 +8,8 @@ interface IQuestionsController {
 
 		function isAllowedToList(uint gameID, address potentialLister) external view returns (bool);
 
+		function isRefereeFor(uint gameID, address potentialReferee) external view returns (bool);
+
 		function gameToken(uint gameID) external view returns (IERC20);
 
 		function maxQuestionBid(uint gameID) external view returns (uint256);

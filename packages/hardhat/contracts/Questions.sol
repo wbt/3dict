@@ -187,6 +187,17 @@ contract Questions is PayableOwnable {
 		}
 	}
 
+	modifier onlyReferee(uint rowID) {
+		_checkReferee(rowID); //Split out like OpenZeppelin's Ownable contract
+		_;
+	}
+
+	function _checkReferee(uint rowID) internal view virtual {
+		if (!controller.isRefereeFor(rows[rowID].game, msg.sender)) {
+			revert PropertyChangeAttemptByNonLister(msg.sender);
+		}
+	}
+
 	modifier onlyIfValidOptionID(uint rowID, uint8 optionID) {
 		_checkOptionIDValidity(rowID, optionID); //Split out like OpenZeppelin's Ownable contract
 		_;
