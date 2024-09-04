@@ -177,8 +177,7 @@ contract Games is PayableOwnable {
 	)
 		PayableOwnable(initialOwner)
 	{
-		emit ControllerChanged(IGamesController(address(0)), initialController);
-		controller = initialController;
+		_changeController(initialController);
 	}
 
 	function changeController(
