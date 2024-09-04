@@ -40,7 +40,7 @@ contract Games is PayableOwnable {
 	}
 	mapping(uint256 => Game) rows;
 
-	event GameAdded(
+	event Creation(
 		address indexed lister,
 		uint indexed newId
 	);
@@ -213,7 +213,7 @@ contract Games is PayableOwnable {
 			'This account is not currently allowed to create a new game.'
 		);
 		maxUsedID++;
-		emit GameAdded(
+		emit Creation(
 			lister,
 			maxUsedID
 		);
