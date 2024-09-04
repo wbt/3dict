@@ -184,6 +184,14 @@ contract Games is PayableOwnable {
 	function changeController(
 		IGamesController newController
 	) public onlyOwner {
+		_changeController(
+			newController
+		);
+	}
+
+	function _changeController(
+		IGamesController newController
+	) private {
 		emit ControllerChanged(
 			controller,
 			newController
