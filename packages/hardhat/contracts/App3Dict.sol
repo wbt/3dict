@@ -27,6 +27,8 @@ contract App3Dict is Ownable{
 	uint24 public defaultSponsorFractionOfOptionPool = 2*100000; // A percentage (e.g. 2 for 2%) * 10^5
 	uint256 public publicGoodsPoolUnpaidBalance = 0;
 	uint256 public publicGoodsPoolPaidOut = 0;
+	bool public openToAnyLister = false; //true on testnet, usually
+	mapping(address => bool) public approvedListers;
 
 	// Events: a way to emit log statements from smart contract that can be listened to by external parties
 	event GreetingChange(
@@ -59,6 +61,17 @@ contract App3Dict is Ownable{
 	event DefaultSponsorFractionOfOptionPoolChange(
 		uint24 oldValue,
 		uint24 newValue
+	);
+
+	event OpenToAnyListerChange(
+		bool oldValue,
+		bool newValue
+	);
+
+	event ApprovedListerChange(
+		address lister,
+		bool wasApproved,
+		bool isApproved
 	);
 
 	event TipReceived(
@@ -176,6 +189,28 @@ contract App3Dict is Ownable{
 			newValue
 		);
 		defaultSponsorFractionOfOptionPool = newValue;
+	}
+
+	function changeOpenToAnyLister(
+			bool newValue
+	) public onlyOwner {
+		emit OpenToAnyListerChange(
+			openToAnyLister,
+			newValue
+		);
+		openToAnyLister = newValue;
+	}
+
+	function changeApprovedLister(
+			address lister,
+			bool shouldBeApproved
+	) public onlyOwner {
+		emit ApprovedListerChange(
+			lister,
+			approvedListers[lister],
+			shouldBeApproved
+		);
+		approvedListers[lister] = shouldBeApproved;
 	}
 
 	function donateToPublicGoods(
