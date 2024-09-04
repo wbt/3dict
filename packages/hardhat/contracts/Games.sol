@@ -237,24 +237,24 @@ contract Games is PayableOwnable {
 
 	function changeLister(
 		uint rowID,
-		address newLister
+		address newValue
 	) public onlyLister(rowID) {
 		_changeLister(
 			rowID,
-			newLister
+			newValue
 		);
 	}
 
 	function _changeLister(
 		uint rowID,
-		address newLister
+		address newValue
 	) private {
 		emit ListerChanged(
 			rowID,
 			rows[rowID].lister,
-			newLister
+			newValue
 		);
-		rows[rowID].lister = newLister;
+		rows[rowID].lister = newValue;
 	}
 
 	function addSponsorship(
