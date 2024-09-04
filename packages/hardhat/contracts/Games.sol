@@ -510,4 +510,30 @@ contract Games is PayableOwnable {
 		);
 		games[gameID].maxQuestionBid = newValue;
 	}
+
+	function changeAskerApproval(
+		uint gameID,
+		address asker,
+		int8 newValue
+	) public onlyLister(gameID) {
+		_changeAskerApproval(
+			gameID,
+			asker,
+			newValue
+		);
+	}
+
+	function _changeAskerApproval(
+		uint gameID,
+		address asker,
+		int8 newValue
+	) private {
+		emit AskerApprovalChanged(
+			gameID,
+			asker,
+			games[gameID].askerApprovals[asker],
+			newValue
+		);
+		games[gameID].askerApprovals[asker] = newValue;
+	}
 }

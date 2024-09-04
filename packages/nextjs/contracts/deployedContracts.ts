@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
       abi: [
         {
           inputs: [
@@ -69,7 +69,7 @@ const deployedContracts = {
               type: "bool",
             },
           ],
-          name: "ApprovedListerChange",
+          name: "ApprovedListerChanged",
           type: "event",
         },
         {
@@ -88,7 +88,7 @@ const deployedContracts = {
               type: "address",
             },
           ],
-          name: "BaseTokenChange",
+          name: "BaseTokenChanged",
           type: "event",
         },
         {
@@ -145,7 +145,7 @@ const deployedContracts = {
               type: "uint24",
             },
           ],
-          name: "DefaultSponsorFractionOfOptionPoolChange",
+          name: "DefaultSponsorFractionOfOptionPoolChanged",
           type: "event",
         },
         {
@@ -208,7 +208,7 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "GameSponsorMinChange",
+          name: "GameSponsorMinChanged",
           type: "event",
         },
         {
@@ -227,7 +227,7 @@ const deployedContracts = {
               type: "bool",
             },
           ],
-          name: "OpenToAnyListerChange",
+          name: "OpenToAnyListerChanged",
           type: "event",
         },
         {
@@ -315,7 +315,7 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "QuestionSponsorMinChange",
+          name: "QuestionSponsorMinChanged",
           type: "event",
         },
         {
@@ -334,7 +334,7 @@ const deployedContracts = {
               type: "uint24",
             },
           ],
-          name: "SponsorFractionOfQuestionPoolChange",
+          name: "SponsorFractionOfQuestionPoolChanged",
           type: "event",
         },
         {
