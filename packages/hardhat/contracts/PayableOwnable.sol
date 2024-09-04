@@ -56,7 +56,9 @@ contract PayableOwnable is Ownable {
 	 * Function that allows the owner to withdraw all the Ether in the contract
 	 * The function can only be called by the owner of the contract as defined by the modifier
 	 */
-	function payoutEth(address payable recipient) virtual public onlyOwner {
+	function payoutEth(
+		address payable recipient
+	) virtual public onlyOwner {
 		emit EthWithdrawal(
 			recipient,
 			address(this).balance
