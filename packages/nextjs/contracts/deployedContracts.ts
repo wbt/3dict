@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      address: "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
       abi: [
         {
           inputs: [
@@ -127,6 +127,50 @@ const deployedContracts = {
             },
           ],
           name: "DefaultSponsorFractionOfOptionPoolChange",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaidOut",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IERC20",
+              name: "tokenContract",
+              type: "address",
+            },
+          ],
+          name: "ERC20Withdrawal",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaidOut",
+              type: "uint256",
+            },
+          ],
+          name: "EthWithdrawal",
           type: "event",
         },
         {
@@ -621,14 +665,39 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IERC20",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "withdrawERC20Tokens",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
           stateMutability: "payable",
           type: "receive",
         },
       ],
       inheritedFunctions: {
-        owner: "@openzeppelin/contracts/access/Ownable.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        owner: "contracts/PayableOwnable.sol",
+        payoutEth: "contracts/PayableOwnable.sol",
+        renounceOwnership: "contracts/PayableOwnable.sol",
+        transferOwnership: "contracts/PayableOwnable.sol",
+        withdrawERC20Tokens: "contracts/PayableOwnable.sol",
       },
     },
     USDME: {
