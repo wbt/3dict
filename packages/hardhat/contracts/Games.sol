@@ -238,6 +238,26 @@ contract Games is PayableOwnable {
 		games[gameID].lister = newLister;
 	}
 
+	function addSponsorship(
+		uint gameID,
+		uint amountToAdd,
+		address sponsor
+	) public {
+		games[gameID].sponsors[sponsor] += amountToAdd;
+		games[gameID].totalSponsoredAmount += amountToAdd;
+		emit SponsorshipAdded(
+			gameID,
+			sponsor,
+			amountToAdd,
+			games[gameID].sponsors[sponsor],
+			games[gameID].totalSponsoredAmount
+		);
+		require(
+			games[gameID].gameToken.transferFrom(msg.sender, address(controller), amountToAdd),
+			'Sponsorship addition failed.'
+		);
+	}
+
 	/* TODO: Work through all the implications
 	* of allowing a change to the game token
 	* before enabling this function.

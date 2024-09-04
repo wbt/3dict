@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+      address: "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
       abi: [
         {
           inputs: [
@@ -18,7 +18,7 @@ const deployedContracts = {
             },
             {
               internalType: "contract ERC20",
-              name: "_baseToken",
+              name: "baseTokenToSet",
               type: "address",
             },
           ],
@@ -77,13 +77,13 @@ const deployedContracts = {
           inputs: [
             {
               indexed: true,
-              internalType: "contract ERC20",
+              internalType: "contract IERC20",
               name: "oldBaseToken",
               type: "address",
             },
             {
               indexed: true,
-              internalType: "contract ERC20",
+              internalType: "contract IERC20",
               name: "newBaseToken",
               type: "address",
             },
@@ -361,7 +361,7 @@ const deployedContracts = {
           name: "baseToken",
           outputs: [
             {
-              internalType: "contract ERC20",
+              internalType: "contract IERC20",
               name: "",
               type: "address",
             },
@@ -717,6 +717,7 @@ const deployedContracts = {
         renounceOwnership: "contracts/PayableOwnable.sol",
         transferOwnership: "contracts/PayableOwnable.sol",
         withdrawERC20Tokens: "contracts/PayableOwnable.sol",
+        baseToken: "contracts/IGamesController.sol",
         isAllowedToList: "contracts/IGamesController.sol",
       },
     },
