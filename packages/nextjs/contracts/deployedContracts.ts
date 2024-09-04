@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
       abi: [
         {
           inputs: [
@@ -51,6 +51,31 @@ const deployedContracts = {
           anonymous: false,
           inputs: [
             {
+              indexed: false,
+              internalType: "address",
+              name: "lister",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "wasApproved",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isApproved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovedListerChange",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
               indexed: true,
               internalType: "contract ERC20",
               name: "oldBaseToken",
@@ -64,6 +89,44 @@ const deployedContracts = {
             },
           ],
           name: "BaseTokenChange",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "paidTo",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaidOut",
+              type: "uint256",
+            },
+          ],
+          name: "BaseTokensPayout",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint24",
+              name: "oldValue",
+              type: "uint24",
+            },
+            {
+              indexed: false,
+              internalType: "uint24",
+              name: "newValue",
+              type: "uint24",
+            },
+          ],
+          name: "DefaultSponsorFractionOfOptionPoolChange",
           type: "event",
         },
         {
@@ -89,31 +152,19 @@ const deployedContracts = {
           anonymous: false,
           inputs: [
             {
-              indexed: true,
-              internalType: "address",
-              name: "greetingSetter",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "string",
-              name: "newGreeting",
-              type: "string",
-            },
-            {
               indexed: false,
               internalType: "bool",
-              name: "premium",
+              name: "oldValue",
               type: "bool",
             },
             {
               indexed: false,
-              internalType: "uint256",
-              name: "value",
-              type: "uint256",
+              internalType: "bool",
+              name: "newValue",
+              type: "bool",
             },
           ],
-          name: "GreetingChange",
+          name: "OpenToAnyListerChange",
           type: "event",
         },
         {
@@ -140,63 +191,6 @@ const deployedContracts = {
           inputs: [
             {
               indexed: false,
-              internalType: "uint256",
-              name: "oldValue",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "newValue",
-              type: "uint256",
-            },
-          ],
-          name: "QuestionSponsorMinChange",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "address",
-              name: "paidTo",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "amountPaidOut",
-              type: "uint256",
-            },
-          ],
-          name: "baseTokensPayout",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "uint24",
-              name: "oldValue",
-              type: "uint24",
-            },
-            {
-              indexed: false,
-              internalType: "uint24",
-              name: "newValue",
-              type: "uint24",
-            },
-          ],
-          name: "defaultSponsorFractionOfOptionPoolChange",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
               internalType: "address",
               name: "donor",
               type: "address",
@@ -214,7 +208,7 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "publicGoodsPoolDonationReceived",
+          name: "PublicGoodsPoolDonationReceived",
           type: "event",
         },
         {
@@ -239,7 +233,26 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "publicGoodsPoolPayout",
+          name: "PublicGoodsPoolPayout",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "QuestionSponsorMinChange",
           type: "event",
         },
         {
@@ -258,7 +271,7 @@ const deployedContracts = {
               type: "uint24",
             },
           ],
-          name: "sponsorFractionOfQuestionPoolChange",
+          name: "SponsorFractionOfQuestionPoolChange",
           type: "event",
         },
         {
@@ -277,8 +290,27 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "tipReceived",
+          name: "TipReceived",
           type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "approvedListers",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
         },
         {
           inputs: [],
@@ -291,6 +323,24 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lister",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "shouldBeApproved",
+              type: "bool",
+            },
+          ],
+          name: "changeApprovedLister",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -328,6 +378,19 @@ const deployedContracts = {
             },
           ],
           name: "changeGameSponsorMin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "newValue",
+              type: "bool",
+            },
+          ],
+          name: "changeOpenToAnyLister",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -399,12 +462,12 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "greeting",
+          name: "openToAnyLister",
           outputs: [
             {
-              internalType: "string",
+              internalType: "bool",
               name: "",
-              type: "string",
+              type: "bool",
             },
           ],
           stateMutability: "view",
@@ -461,19 +524,6 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "premium",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
           name: "publicGoodsPoolPaidOut",
           outputs: [
             {
@@ -519,19 +569,6 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "string",
-              name: "_newGreeting",
-              type: "string",
-            },
-          ],
-          name: "setGreeting",
-          outputs: [],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
           inputs: [],
           name: "sponsorFractionOfQuestionPool",
           outputs: [
@@ -558,19 +595,6 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [],
-          name: "totalCounter",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
           inputs: [
             {
               internalType: "address",
@@ -581,25 +605,6 @@ const deployedContracts = {
           name: "transferOwnership",
           outputs: [],
           stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "userGreetingCounter",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
           type: "function",
         },
         {

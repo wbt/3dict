@@ -7,17 +7,8 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
 contract App3Dict is Ownable{
 	// State Variables
-	string public greeting = "Building Unstoppable Apps!!!";
-	bool public premium = false;
-	uint256 public totalCounter = 0;
-	mapping(address => uint) public userGreetingCounter;
 	// baseToken: The base unit other prices are denoted in,
 	// which becomes more important when using Chainlink price feeds to accept payment in various tokens
 	ERC20 public baseToken;
@@ -29,14 +20,6 @@ contract App3Dict is Ownable{
 	uint256 public publicGoodsPoolPaidOut = 0;
 	bool public openToAnyLister = false; //true on testnet, usually
 	mapping(address => bool) public approvedListers;
-
-	// Events: a way to emit log statements from smart contract that can be listened to by external parties
-	event GreetingChange(
-		address indexed greetingSetter,
-		string newGreeting,
-		bool premium,
-		uint256 value
-	);
 
 	event BaseTokenChange(
 		ERC20 indexed oldBaseToken,
@@ -109,35 +92,6 @@ contract App3Dict is Ownable{
 		// Verify support before using any particular token in the constructor.
 		gameSponsorMin = 100 * 10 ** ERC20(baseToken).decimals();
 		questionSponsorMin = 5 * 10 ** ERC20(baseToken).decimals();
-	}
-
-	/**
-	 * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
-	 *
-	 * @param _newGreeting (string memory) - new greeting to save on the contract
-	 */
-	function setGreeting(string memory _newGreeting) public payable {
-		// Print data to the hardhat chain console. Remove when deploying to a live network.
-		console.log(
-			"Setting new greeting '%s' from %s",
-			_newGreeting,
-			msg.sender
-		);
-
-		// Change state variables
-		greeting = _newGreeting;
-		totalCounter += 1;
-		userGreetingCounter[msg.sender] += 1;
-
-		// msg.value: built-in global variable that represents the amount of ether sent with the transaction
-		if (msg.value > 0) {
-			premium = true;
-		} else {
-			premium = false;
-		}
-
-		// emit: keyword used to trigger an event
-		emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, msg.value);
 	}
 
 	// Use with caution, especially if base token isn't a 1:1 value to the old!

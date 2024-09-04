@@ -47,7 +47,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
   // Get the deployed contract to interact with it after deploying.
   const app3Dict = await hre.ethers.getContract<Contract>("App3Dict", deployer);
-  console.log("👋 Initial greeting in app:", await app3Dict.greeting());
+  console.log("Initial base token in app:", await app3Dict.baseToken());
 
   await deploy("YourContract", {
     from: deployer,
