@@ -302,6 +302,28 @@ contract Games is PayableOwnable {
 		games[gameID].endTime = newValue;
 	}
 
+	function changeLocationID(
+		uint gameID,
+		uint newValue
+	) public onlyLister(gameID) {
+		_changeLocationID(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeLocationID(
+		uint gameID,
+		uint newValue
+	) private {
+		emit LocationIDChanged(
+			gameID,
+			games[gameID].locationID,
+			newValue
+		);
+		games[gameID].locationID = newValue;
+	}
+
 	/* TODO: Work through all the implications
 	* of allowing a change to the game token
 	* before enabling this function.
