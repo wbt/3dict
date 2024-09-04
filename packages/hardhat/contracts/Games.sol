@@ -53,6 +53,109 @@ contract Games is PayableOwnable {
 		IGamesController indexed newController
 	);
 
+	event ListerChanged(
+		uint indexed gameID,
+		address indexed oldLister,
+		address indexed newLister
+	);
+
+	event SponsorshipAdded(
+		uint indexed gameID,
+		address indexed sponsor,
+		uint amountAdded,
+		uint totalSponsorshipFromThisSponsor,
+		uint totalSponsorship
+	);
+
+	event CheckInStartChanged(
+		uint indexed gameID,
+		uint oldValue,
+		uint newValue
+	);
+
+	event EndTimeChanged(
+		uint indexed gameID,
+		uint oldValue,
+		uint newValue
+	);
+
+	event LocationIDChanged(
+		uint indexed gameID,
+		uint oldValue,
+		uint newValue
+	);
+
+	event RefereeAdded(
+		uint indexed gameID,
+		address indexed referee
+	);
+
+	event RefereeRemoved(
+		uint indexed gameID,
+		address indexed referee
+	);
+
+	event CheckInRequiredChanged(
+		uint indexed gameID,
+		bool oldValue,
+		bool newValue
+	);
+
+	event OpenToAnyAskerChanged(
+		uint indexed gameID,
+		bool oldValue,
+		bool newValue
+	);
+
+	event SponsorFractionOfOptionPoolChanged(
+		uint indexed gameID,
+		uint24 oldValue,
+		uint24 newValue
+	);
+
+	event MaxQuestionBidChanged(
+		uint indexed gameID,
+		uint oldValue,
+		uint newValue
+	);
+
+	event AskerApprovalChanged(
+		uint indexed gameID,
+		address indexed asker,
+		int8 oldValue,
+		int8 newValue
+	);
+
+	event ImageURIChanged(
+		uint indexed gameID,
+		string oldValue,
+		string newValue
+	);
+
+	event Title140Changed(
+		uint indexed gameID,
+		string oldValue,
+		string newValue
+	);
+
+	event Descr500Changed(
+		uint indexed gameID,
+		string oldValue,
+		string newValue
+	);
+
+	event ListStartChanged(
+		uint indexed gameID,
+		uint oldValue,
+		uint newValue
+	);
+
+	event ListEndChanged(
+		uint indexed gameID,
+		uint oldValue,
+		uint newValue
+	);
+
 	constructor(
 		address payable initialOwner,
 		IGamesController initialController
