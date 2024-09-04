@@ -3,8 +3,15 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract PayableOwnable is Ownable {
+
+	event ERC20Withdrawal(
+		address recipient,
+		uint256 amountPaidOut,
+		IERC20 tokenContract
+	);
 
 	event EthWithdrawal(
 		address recipient,
@@ -16,6 +23,33 @@ contract PayableOwnable is Ownable {
 	)
 		Ownable(initialOwner)
 	{
+	}
+
+	function withdrawERC20Tokens(
+		address recipient,
+		uint256 payAmount,
+		IERC20 tokenContract
+	) public onlyOwner {
+		require(_withdrawERC20Tokens(
+			recipient,
+			payAmount,
+			tokenContract
+		), 'Token withdrawal failed.');
+	}
+
+	function _withdrawERC20Tokens(
+		address recipient,
+		uint256 payAmount,
+		IERC20 tokenContract
+	) internal returns (bool success) {
+		//Balance check should be done in ERC20 contract transfer fn
+		tokenContract.transfer(recipient, payAmount);
+		emit ERC20Withdrawal(
+			recipient,
+			payAmount,
+			tokenContract
+		);
+		return tokenContract.transfer(recipient, payAmount);
 	}
 
 	/**
