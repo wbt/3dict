@@ -41,6 +41,7 @@ contract Questions is PayableOwnable {
 		mapping(address => uint) sponsors; // uint is amount sponsored, in base tokens.
 		uint totalSponsoredAmount;
 		string[] options; //up to 26 strings each up to 140 chars
+		bool[] optionRemoved;
 		uint16[] resolutionFractions; //should total 10000 //or should that be -1000*sponsorFractionOfOptionPool?
 		mapping(address => uint)[] playerPositions;
 		uint[] optionPools;
@@ -192,7 +193,7 @@ contract Questions is PayableOwnable {
 	}
 
 	function _checkOptionIDValidity(uint rowID, uint8 optionID) internal view virtual {
-		if (optionID < rows[rowID].options.length) {
+		if ((optionID < rows[rowID].options.length) || rows[rowID].optionRemoved[optionID]) {
 			revert InvalidOptionID(rowID, optionID);
 		}
 	}
@@ -436,13 +437,7 @@ contract Questions is PayableOwnable {
 			rows[rowID].options[optionID]
 		);
 		require(rows[rowID].optionPools[optionID] <= 0, 'Cannot delete an option when players have an open position in it.');
-		for(uint i = optionID; i<rows[rowID].options.length-2; i++) {
-			rows[rowID].options[i] = rows[rowID].options[i+1];
-			rows[rowID].resolutionFractions[i] = rows[rowID].resolutionFractions[i+1];
-			//TODO: This isn't assignable; consider struct strategy.
-			//rows[rowID].playerPositions[i] = rows[rowID].playerPositions[i+1];
-			rows[rowID].optionPools[i] = rows[rowID].optionPools[i+1];
-		}
+		rows[rowID].optionRemoved[optionID] = true;
 	}
 
 	function changeStartTime(
@@ -523,6 +518,9 @@ contract Questions is PayableOwnable {
 		uint16[] calldata resolutionFractions
 	) private {
 		require(resolutionFractions.length == rows[rowID].options.length, 'Invalid length of resolutionFractions parameter.');
+		for(uint8 i=0; i<resolutionFractions.length; i++) {
+			require(!(rows[rowID].optionRemoved[i] && resolutionFractions[i] > 0), 'ResolutionFractions specifies nonzero value for removed option.');
+		}
 		emit Resolved(
 			rowID,
 			false,
