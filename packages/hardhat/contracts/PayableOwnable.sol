@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract PayableOwnable is Ownable {
 
 	event EthWithdrawal(
-		address paidTo,
+		address recipient,
 		uint256 amountPaidOut
 	);
 
@@ -24,7 +24,7 @@ contract PayableOwnable is Ownable {
 	 */
 	function payoutEth(address payable recipient) public onlyOwner {
 		emit EthWithdrawal(
-			payTo,
+			recipient,
 			address(this).balance
 		);
 		(bool success, ) = payable(recipient).call{ value: address(this).balance }("");
