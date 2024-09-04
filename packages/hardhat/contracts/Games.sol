@@ -5,7 +5,7 @@ import "./IGamesController.sol";
 import "./PayableOwnable.sol";
 
 contract Games is PayableOwnable {
-	uint256 maxUsedGameID = 0; // 0 is not actually used, but reserved for the undefined/empty game
+	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty game
 	IGamesController controller;
 	struct Game {
 		address lister;
@@ -198,25 +198,25 @@ contract Games is PayableOwnable {
 			controller.isAllowedToList(lister),
 			'This account is not currently allowed to create a new game.'
 		);
-		maxUsedGameID++;
+		maxUsedID++;
 		emit GameAdded(
 			lister,
-			maxUsedGameID
+			maxUsedID
 		);
 		_changeLister(
-			maxUsedGameID,
+			maxUsedID,
 			lister
 		);
 		_changeGameToken(
-			maxUsedGameID,
+			maxUsedID,
 			controller.baseToken()
 		);
 		_changeSponsorFractionOfOptionPool(
-			maxUsedGameID,
+			maxUsedID,
 			controller.defaultSponsorFractionOfOptionPool()
 		);
 		_changeMaxQuestionBid(
-			maxUsedGameID,
+			maxUsedID,
 			controller.defaultMaxQuestionBid()
 		);
 	}
