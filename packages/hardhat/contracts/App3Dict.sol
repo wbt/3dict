@@ -7,10 +7,10 @@ pragma solidity >=0.8.0 <0.9.0;
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./PayableOwnable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract App3Dict is Ownable{
+contract App3Dict is PayableOwnable {
 	// State Variables
 	// baseToken: The base unit other prices are denoted in,
 	// which becomes more important when using Chainlink price feeds to accept payment in various tokens
@@ -88,7 +88,7 @@ contract App3Dict is Ownable{
 		address payable initialOwner,
 		ERC20 _baseToken
 	)
-		Ownable(initialOwner)
+		PayableOwnable(initialOwner)
 	{
 		baseToken = _baseToken;
 		// NOTE: The .decimals() function is not part of the ERC-20 standard interface (IERC20)!
@@ -225,17 +225,4 @@ contract App3Dict is Ownable{
 		require(baseToken.transfer(payTo, payAmount), 'Payout failed.');
 	}
 
-	/**
-	 * Function that allows the owner to withdraw all the Ether in the contract
-	 * The function can only be called by the owner of the contract as defined by the modifier
-	 */
-	function payoutEth(address payable recipient) public onlyOwner {
-		(bool success, ) = payable(recipient).call{ value: address(this).balance }("");
-		require(success, "Failed to send Ether");
-	}
-
-	/**
-	 * Function that allows the contract to receive ETH
-	 */
-	receive() external payable {}
 }
