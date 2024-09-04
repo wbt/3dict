@@ -201,7 +201,7 @@ contract App3Dict is Ownable{
 		);
 		publicGoodsPoolPaidOut += payAmount;
 		publicGoodsPoolUnpaidBalance -= payAmount;
-		baseToken.transfer(payTo, payAmount);
+		require(baseToken.transfer(payTo, payAmount), 'Public goods payout failed.');
 	}
 
 	function payoutBaseTokens(
@@ -216,7 +216,7 @@ contract App3Dict is Ownable{
 			payTo,
 			payAmount
 		);
-		baseToken.transfer(payTo, payAmount);
+		require(baseToken.transfer(payTo, payAmount), 'Payout failed.');
 	}
 
 	/**
