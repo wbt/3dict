@@ -353,6 +353,42 @@ contract Games is PayableOwnable {
 		}
 	}
 
+	function removeReferee(
+		uint gameID,
+		address referee
+	) public onlyLister(gameID) {
+		_removeReferee(
+			gameID,
+			referee
+		);
+	}
+
+	function _removeReferee(
+		uint gameID,
+		address referee
+	) private {
+		bool found = false;
+		uint foundAt = 0;
+		for(uint i = 0; i<games[gameID].referees.length; i++) {
+			if(games[gameID].referees[i] == referee) {
+				found = true;
+				foundAt = i;
+			}
+		}
+		if(found) {
+			if(foundAt < games[gameID].referees.length-1) {
+				//if not the last element in the array, move the last element into the place being vacated
+				games[gameID].referees[foundAt] = games[gameID].referees[games[gameID].referees.length-1];
+			}
+			//Then drop the last element
+			games[gameID].referees.pop();
+			emit RefereeRemoved(
+				gameID,
+				referee
+			);
+		}
+	}
+
 	/* TODO: Work through all the implications
 	* of allowing a change to the game token
 	* before enabling this function.
