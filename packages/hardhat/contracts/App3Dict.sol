@@ -118,6 +118,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeBaseToken(
 		ERC20 newBaseToken
 	) public onlyOwner {
+		_changeBaseToken(newBaseToken);
+	}
+
+	function _changeBaseToken(
+		ERC20 newBaseToken
+	) private {
 		emit BaseTokenChanged(
 			_baseToken,
 			newBaseToken
@@ -128,6 +134,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeGameSponsorMin(
 		uint256 newValue
 	) public onlyOwner {
+		_changeGameSponsorMin(newValue);
+	}
+
+	function _changeGameSponsorMin(
+		uint256 newValue
+	) private {
 		emit GameSponsorMinChanged(
 			gameSponsorMin,
 			newValue
@@ -138,6 +150,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeQuestionSponsorMin(
 		uint256 newValue
 	) public onlyOwner {
+		_changeQuestionSponsorMin(newValue);
+	}
+
+	function _changeQuestionSponsorMin(
+		uint256 newValue
+	) private {
 		emit QuestionSponsorMinChanged(
 			questionSponsorMin,
 			newValue
@@ -148,6 +166,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeDefaultMaxQuestionBid(
 		uint256 newValue
 	) public onlyOwner {
+		_changeDefaultMaxQuestionBid(newValue);
+	}
+
+	function _changeDefaultMaxQuestionBid(
+		uint256 newValue
+	) private {
 		emit DefaultMaxQuestionBidChanged(
 			defaultMaxQuestionBid,
 			newValue
@@ -158,6 +182,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeSponsorFractionOfQuestionPool(
 		uint24 newValue
 	) public onlyOwner {
+		_changeSponsorFractionOfQuestionPool(newValue);
+	}
+
+	function _changeSponsorFractionOfQuestionPool(
+		uint24 newValue
+	) private {
 		emit SponsorFractionOfQuestionPoolChanged(
 			sponsorFractionOfQuestionPool,
 			newValue
@@ -168,6 +198,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeDefaultSponsorFractionOfOptionPool(
 		uint24 newValue
 	) public onlyOwner {
+		_changeDefaultSponsorFractionOfOptionPool(newValue);
+	}
+
+	function _changeDefaultSponsorFractionOfOptionPool(
+		uint24 newValue
+	) private {
 		emit DefaultSponsorFractionOfOptionPoolChanged(
 			defaultSponsorFractionOfOptionPool,
 			newValue
@@ -178,6 +214,12 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeOpenToAnyLister(
 		bool newValue
 	) public onlyOwner {
+		_changeOpenToAnyLister(newValue);
+	}
+
+	function _changeOpenToAnyLister(
+		bool newValue
+	) private {
 		emit OpenToAnyListerChanged(
 			openToAnyLister,
 			newValue
@@ -189,6 +231,13 @@ contract App3Dict is PayableOwnable, IGamesController {
 		address lister,
 		bool shouldBeApproved
 	) public onlyOwner {
+		_changeApprovedLister(lister, shouldBeApproved);
+	}
+
+	function _changeApprovedLister(
+		address lister,
+		bool shouldBeApproved
+	) private {
 		emit ApprovedListerChanged(
 			lister,
 			approvedListers[lister],
@@ -223,6 +272,16 @@ contract App3Dict is PayableOwnable, IGamesController {
 		address payTo,
 		uint256 payAmount
 	) public onlyOwner {
+		_payoutPublicGoods(
+			payTo,
+			payAmount
+		);
+	}
+
+	function _payoutPublicGoods(
+		address payTo,
+		uint256 payAmount
+	) private {
 		require(payAmount <= publicGoodsPoolUnpaidBalance, 'Insufficient funds in public goods pool!');
 		emit PublicGoodsPoolPayout(
 			payTo,
@@ -238,6 +297,16 @@ contract App3Dict is PayableOwnable, IGamesController {
 		address payTo,
 		uint256 payAmount
 	) public onlyOwner {
+		_payoutBaseTokens(
+			payTo,
+			payAmount
+		);
+	}
+
+	function _payoutBaseTokens(
+		address payTo,
+		uint256 payAmount
+	) private {
 		require(
 			payAmount <= (_baseToken.balanceOf(address(this))-publicGoodsPoolUnpaidBalance),
 			'Insufficient funds to make the requested withdrawal!'
