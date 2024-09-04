@@ -395,6 +395,8 @@ contract Questions is PayableOwnable {
 					options[i]
 				);
 				rows[rowID].options.push(options[i]);
+				rows[rowID].optionPools.push(0);
+				rows[rowID].playerPositions.push({});
 			}
 		}
 	}
