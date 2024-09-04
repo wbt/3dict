@@ -10,5 +10,7 @@ interface IGamesController {
 
 		function baseToken() external view returns (IERC20);
 
+		function defaultMaxQuestionBid() external view returns (uint256);
+
 		function defaultSponsorFractionOfOptionPool() external view returns(uint24);
 }

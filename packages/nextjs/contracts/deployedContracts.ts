@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
       abi: [
         {
           inputs: [
@@ -108,6 +108,25 @@ const deployedContracts = {
             },
           ],
           name: "BaseTokensPayout",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "DefaultMaxQuestionBidChanged",
           type: "event",
         },
         {
@@ -403,6 +422,19 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeDefaultMaxQuestionBid",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "uint24",
               name: "newValue",
               type: "uint24",
@@ -463,6 +495,19 @@ const deployedContracts = {
           name: "changeSponsorFractionOfQuestionPool",
           outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "defaultMaxQuestionBid",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -718,6 +763,8 @@ const deployedContracts = {
         transferOwnership: "contracts/PayableOwnable.sol",
         withdrawERC20Tokens: "contracts/PayableOwnable.sol",
         baseToken: "contracts/IGamesController.sol",
+        defaultMaxQuestionBid: "contracts/IGamesController.sol",
+        defaultSponsorFractionOfOptionPool: "contracts/IGamesController.sol",
         isAllowedToList: "contracts/IGamesController.sol",
       },
     },
