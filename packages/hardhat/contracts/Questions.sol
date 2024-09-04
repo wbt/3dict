@@ -502,6 +502,7 @@ contract Questions is PayableOwnable {
 		uint rowID,
 		uint16[] calldata resolutionFractions
 	) private {
+		require(resolutionFractions.length == rows[rowID].options.length, 'Invalid length of resolutionFractions parameter.');
 		emit Resolved(
 			rowID,
 			false,
