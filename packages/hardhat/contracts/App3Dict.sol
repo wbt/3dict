@@ -4,9 +4,6 @@
 //to modify app-wide settings; an improved app manager interface is prioritized out of the MVP.
 pragma solidity >=0.8.0 <0.9.0;
 
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
-
 import "./IGamesController.sol";
 import "./PayableOwnable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
