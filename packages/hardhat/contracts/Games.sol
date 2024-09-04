@@ -32,6 +32,7 @@ contract Games is PayableOwnable {
 		// and (b) on-chain events with events fired on every change help support server-side render caching
 		// with reliable cache invalidation when data changes.
 		string imageURI;
+		string eventURI;
 		string title140; // Up to 140 character title
 		string descr500; // Up to 500 character description
 		uint listStart; // for example, the published start time of a sports game.
@@ -129,6 +130,12 @@ contract Games is PayableOwnable {
 	);
 
 	event ImageURIChanged(
+		uint indexed rowID,
+		string oldValue,
+		string newValue
+	);
+
+	event EventURIChanged(
 		uint indexed rowID,
 		string oldValue,
 		string newValue
@@ -561,6 +568,28 @@ contract Games is PayableOwnable {
 			newValue
 		);
 		rows[rowID].imageURI = newValue;
+	}
+
+	function changeEventURI(
+		uint rowID,
+		string calldata newValue
+	) public onlyLister(rowID) {
+		_changeEventURI(
+			rowID,
+			newValue
+		);
+	}
+
+	function _changeEventURI(
+		uint rowID,
+		string calldata newValue
+	) private {
+		emit ImageURIChanged(
+			rowID,
+			rows[rowID].eventURI,
+			newValue
+		);
+		rows[rowID].eventURI = newValue;
 	}
 
 	function changeTitle140(
