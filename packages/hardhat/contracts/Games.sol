@@ -204,4 +204,16 @@ contract Games is PayableOwnable {
 		games[maxUsedGameID].lister = lister;
 	}
 
+	function changeLister(
+		uint gameID,
+		address newLister
+	) public onlyLister(gameID) {
+		emit ListerChanged(
+			gameID,
+			games[gameID].lister,
+			newLister
+		);
+		games[gameID].lister = newLister;
+	}
+
 }
