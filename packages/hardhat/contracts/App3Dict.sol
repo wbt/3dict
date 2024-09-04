@@ -19,6 +19,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	ERC20 private _baseToken; //baseToken() getter returns IERC20
 	uint256 public gameSponsorMin;
 	uint256 public questionSponsorMin;
+	uint256 public defaultMaxQuestionBid;
 	uint24 public sponsorFractionOfQuestionPool = 20*100000; // A percentage (e.g. 20 for 20%) * 10^5
 	uint24 public defaultSponsorFractionOfOptionPool = 2*100000; // A percentage (e.g. 2 for 2%) * 10^5
 	uint256 public publicGoodsPoolUnpaidBalance = 0;
@@ -37,6 +38,11 @@ contract App3Dict is PayableOwnable, IGamesController {
 	);
 
 	event QuestionSponsorMinChange(
+		uint256 oldValue,
+		uint256 newValue
+	);
+
+	event DefaultMaxQuestionBidChanged(
 		uint256 oldValue,
 		uint256 newValue
 	);
@@ -97,9 +103,11 @@ contract App3Dict is PayableOwnable, IGamesController {
 		// Verify support before using any particular token in the constructor.
 		gameSponsorMin = 100 * 10 ** ERC20(_baseToken).decimals();
 		questionSponsorMin = 5 * 10 ** ERC20(_baseToken).decimals();
+		defaultMaxQuestionBid = 100 * 10 ** ERC20(_baseToken).decimals();
 		emit BaseTokenChange(ERC20(address(0)), _baseToken);
 		emit GameSponsorMinChange(0, gameSponsorMin);
 		emit QuestionSponsorMinChange(0, questionSponsorMin);
+		emit DefaultMaxQuestionBidChanged(0, defaultMaxQuestionBid);
 	}
 
 	function baseToken() public view returns (IERC20) {
@@ -135,6 +143,16 @@ contract App3Dict is PayableOwnable, IGamesController {
 			newValue
 		);
 		questionSponsorMin = newValue;
+	}
+
+	function changeDefaultMaxQuestionBid(
+		uint256 newValue
+	) public onlyOwner {
+		emit DefaultMaxQuestionBidChanged(
+			defaultMaxQuestionBid,
+			newValue
+		);
+		defaultMaxQuestionBid = newValue;
 	}
 
 	function changeSponsorFractionOfQuestionPool(
