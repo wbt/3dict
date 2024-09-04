@@ -41,7 +41,7 @@ contract Games is PayableOwnable {
 
 	event GameAdded(
 		address indexed lister,
-		uint indexed newGameId
+		uint indexed newId
 	);
 
 	event ControllerChanged(
