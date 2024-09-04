@@ -18,8 +18,7 @@ contract Games is PayableOwnable {
 		uint endTime; // for autopayout
 		uint locationID; // supports map search in the future
 		address[] referees; //accounts who can resolve or cancel a question, possibly also account => Boolean mapping and refCount uint.
-		//TODO: allow token choice to be a per-game setting:
-		//addr tokenAddr: The token address exchangeable 1:1 for tokens in the game; auto payout in that token after the game end time
+		IERC20 gameToken; // The token address exchangeable 1:1 for tokens in the game; auto payout in that token after the game end time
 		bool checkInRequired;
 		bool openToAnyAsker;
 		uint24 sponsorFractionOfOptionPool; // A percentage (e.g. 2 for 2%) * 10^5; can’t be changed after CheckInStart
@@ -93,6 +92,12 @@ contract Games is PayableOwnable {
 	event RefereeRemoved(
 		uint indexed gameID,
 		address indexed referee
+	);
+
+	event GameTokenChanged(
+		uint indexed gameID,
+		IERC20 oldValue,
+		IERC20 newValue
 	);
 
 	event CheckInRequiredChanged(
@@ -205,6 +210,10 @@ contract Games is PayableOwnable {
 			maxUsedGameID,
 			lister
 		);
+		_changeGameToken(
+			maxUsedGameID,
+			controller.baseToken()
+		);
 	}
 
 	function changeLister(
@@ -227,6 +236,32 @@ contract Games is PayableOwnable {
 			newLister
 		);
 		games[gameID].lister = newLister;
+	}
+
+	/* TODO: Work through all the implications
+	* of allowing a change to the game token
+	* before enabling this function.
+	function changeGameToken(
+		uint gameID,
+		IERC20 newToken
+	) public onlyLister(gameID) {
+		_changeGameToken(
+			gameID,
+			newToken
+		);
+	}
+	*/
+
+	function _changeGameToken(
+		uint gameID,
+		IERC20 newToken
+	) private {
+		emit GameTokenChanged(
+			gameID,
+			games[gameID].gameToken,
+			newToken
+		);
+		games[gameID].gameToken = newToken;
 	}
 
 }
