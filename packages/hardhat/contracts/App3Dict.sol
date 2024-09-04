@@ -7,10 +7,11 @@ pragma solidity >=0.8.0 <0.9.0;
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
 
+import "./IGamesController.sol";
 import "./PayableOwnable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract App3Dict is PayableOwnable {
+contract App3Dict is PayableOwnable, IGamesController {
 	// State Variables
 	// baseToken: The base unit other prices are denoted in,
 	// which becomes more important when using Chainlink price feeds to accept payment in various tokens
@@ -231,6 +232,14 @@ contract App3Dict is PayableOwnable {
 		IERC20
 	) override public pure {
 		revert('Arbitrary token withdrawal is disabled to protect the public goods balance.');
+	}
+
+	// If changing away from the controller architecture,
+	// might need to change visibility here to public.
+	function isAllowedToList(
+		address potentialLister
+	) external view returns (bool) {
+		return (openToAnyLister || approvedListers[potentialLister]);
 	}
 
 }
