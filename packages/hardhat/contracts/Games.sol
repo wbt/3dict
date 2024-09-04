@@ -324,6 +324,35 @@ contract Games is PayableOwnable {
 		games[gameID].locationID = newValue;
 	}
 
+	function addReferee(
+		uint gameID,
+		address referee
+	) public onlyLister(gameID) {
+		_addReferee(
+			gameID,
+			referee
+		);
+	}
+
+	function _addReferee(
+		uint gameID,
+		address referee
+	) private {
+		bool found = false;
+		for(uint i = 0; i<games[gameID].referees.length; i++) {
+			if(games[gameID].referees[i] == referee) {
+				found = true;
+			}
+		}
+		if(!found) {
+			games[gameID].referees.push(referee);
+			emit RefereeAdded(
+				gameID,
+				referee
+			);
+		}
+	}
+
 	/* TODO: Work through all the implications
 	* of allowing a change to the game token
 	* before enabling this function.
