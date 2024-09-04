@@ -530,9 +530,30 @@ contract Questions is PayableOwnable {
 		//TODO: There's more to do here! Joint private fn shared with _resolve().
 	}
 
+	function freeze(
+		uint rowID
+	) public onlyReferee(rowID) {
+		_freeze(
+			rowID
+		);
+	}
+
+	function _freeze(
+		uint rowID
+	) private {
+		uint16[] memory resolutionFractions = new uint16[](rows[rowID].options.length);
+		for(uint i=0; i<rows[rowID].options.length; i++) {
+			resolutionFractions[i] = uint16(10000*rows[rowID].optionPools[i] / rows[rowID].optionPoolsSum);
+		}
+		_resolve(
+			rowID,
+			resolutionFractions
+		);
+	}
+
 	function resolve(
 		uint rowID,
-		uint16[] calldata resolutionFractions
+		uint16[] memory resolutionFractions
 	) public onlyReferee(rowID) {
 		_resolve(
 			rowID,
@@ -542,7 +563,7 @@ contract Questions is PayableOwnable {
 
 	function _resolve(
 		uint rowID,
-		uint16[] calldata resolutionFractions
+		uint16[] memory resolutionFractions
 	) private {
 		require(resolutionFractions.length == rows[rowID].options.length, 'Invalid length of resolutionFractions parameter.');
 		uint16 sum = 0;
