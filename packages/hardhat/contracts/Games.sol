@@ -156,6 +156,19 @@ contract Games is PayableOwnable {
 		uint newValue
 	);
 
+	error PropertyChangeAttemptByNonLister(address attempter);
+
+	modifier onlyLister(uint gameID) {
+		_checkLister(gameID); //Split out like OpenZeppelin's Ownable contract
+		_;
+	}
+
+	function _checkLister(uint gameID) internal view virtual {
+		if (games[gameID].lister != msg.sender) {
+			revert PropertyChangeAttemptByNonLister(_msgSender());
+		}
+	}
+
 	constructor(
 		address payable initialOwner,
 		IGamesController initialController
