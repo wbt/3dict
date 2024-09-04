@@ -126,7 +126,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function changeGameSponsorMin(
-			uint256 newValue
+		uint256 newValue
 	) public onlyOwner {
 		emit GameSponsorMinChange(
 			gameSponsorMin,
@@ -136,7 +136,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function changeQuestionSponsorMin(
-			uint256 newValue
+		uint256 newValue
 	) public onlyOwner {
 		emit QuestionSponsorMinChange(
 			questionSponsorMin,
@@ -156,7 +156,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function changeSponsorFractionOfQuestionPool(
-			uint24 newValue
+		uint24 newValue
 	) public onlyOwner {
 		emit SponsorFractionOfQuestionPoolChange(
 			sponsorFractionOfQuestionPool,
@@ -166,7 +166,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function changeDefaultSponsorFractionOfOptionPool(
-			uint24 newValue
+		uint24 newValue
 	) public onlyOwner {
 		emit DefaultSponsorFractionOfOptionPoolChange(
 			defaultSponsorFractionOfOptionPool,
@@ -176,7 +176,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function changeOpenToAnyLister(
-			bool newValue
+		bool newValue
 	) public onlyOwner {
 		emit OpenToAnyListerChange(
 			openToAnyLister,
@@ -186,8 +186,8 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function changeApprovedLister(
-			address lister,
-			bool shouldBeApproved
+		address lister,
+		bool shouldBeApproved
 	) public onlyOwner {
 		emit ApprovedListerChange(
 			lister,
@@ -198,7 +198,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function donateToPublicGoods(
-			uint256 amount
+		uint256 amount
 	) public {
 		publicGoodsPoolUnpaidBalance += amount;
 		emit PublicGoodsPoolDonationReceived(
@@ -210,7 +210,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function tip(
-			uint256 amount
+		uint256 amount
 	) public {
 		emit TipReceived(
 			msg.sender, //must have prior allowance
@@ -220,8 +220,8 @@ contract App3Dict is PayableOwnable, IGamesController {
 	}
 
 	function payoutPublicGoods(
-			address payTo,
-			uint256 payAmount
+		address payTo,
+		uint256 payAmount
 	) public onlyOwner {
 		require(payAmount <= publicGoodsPoolUnpaidBalance, 'Insufficient funds in public goods pool!');
 		emit PublicGoodsPoolPayout(
