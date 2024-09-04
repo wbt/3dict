@@ -558,4 +558,26 @@ contract Games is PayableOwnable {
 		);
 		games[gameID].imageURI = newValue;
 	}
+
+	function changeTitle140(
+		uint gameID,
+		string calldata newValue
+	) public onlyLister(gameID) {
+		_changeTitle140(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeTitle140(
+		uint gameID,
+		string calldata newValue
+	) private {
+		emit Title140Changed(
+			gameID,
+			games[gameID].title140,
+			newValue
+		);
+		games[gameID].title140 = newValue;
+	}
 }
