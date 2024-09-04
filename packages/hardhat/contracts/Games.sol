@@ -536,4 +536,26 @@ contract Games is PayableOwnable {
 		);
 		games[gameID].askerApprovals[asker] = newValue;
 	}
+
+	function changeImageURI(
+		uint gameID,
+		string calldata newValue
+	) public onlyLister(gameID) {
+		_changeImageURI(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeImageURI(
+		uint gameID,
+		string calldata newValue
+	) private {
+		emit ImageURIChanged(
+			gameID,
+			games[gameID].imageURI,
+			newValue
+		);
+		games[gameID].imageURI = newValue;
+	}
 }
