@@ -21,9 +21,9 @@ contract Games is PayableOwnable {
 		//TODO: allow token choice to be a per-game setting:
 		//addr tokenAddr: The token address exchangeable 1:1 for tokens in the game; auto payout in that token after the game end time
 		bool checkInRequired;
+		bool openToAnyAsker;
 		uint24 sponsorFractionOfOptionPool; // A percentage (e.g. 2 for 2%) * 10^5; can’t be changed after CheckInStart
 		uint maxQuestionBid; // in token count per question per player.
-		bool openToAnyAsker;
 		mapping (address => int8) askerApprovals; //+1 for whitelist (only attened to if required), -1 for blacklist (though beware Sybils)
 		// Some of the information could go into an off-chain metadata file,
 		// with just one URL here.
