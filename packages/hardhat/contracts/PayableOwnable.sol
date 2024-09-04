@@ -6,6 +6,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PayableOwnable is Ownable {
 
+	event EthWithdrawal(
+		address paidTo,
+		uint256 amountPaidOut
+	);
+
 	constructor(
 		address payable initialOwner
 	)
@@ -18,6 +23,10 @@ contract PayableOwnable is Ownable {
 	 * The function can only be called by the owner of the contract as defined by the modifier
 	 */
 	function payoutEth(address payable recipient) public onlyOwner {
+		emit EthWithdrawal(
+			payTo,
+			address(this).balance
+		);
 		(bool success, ) = payable(recipient).call{ value: address(this).balance }("");
 		require(success, "Failed to send Ether");
 	}
