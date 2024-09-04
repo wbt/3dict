@@ -624,4 +624,27 @@ contract Games is PayableOwnable {
 		);
 		games[gameID].listStart = newValue;
 	}
+
+	function changeListEnd(
+		uint gameID,
+		uint newValue
+	) public onlyLister(gameID) {
+		_changeListEnd(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeListEnd(
+		uint gameID,
+		uint newValue
+	) private {
+		emit ListEndChanged(
+			gameID,
+			games[gameID].listEnd,
+			newValue
+		);
+		games[gameID].listEnd = newValue;
+	}
+
 }
