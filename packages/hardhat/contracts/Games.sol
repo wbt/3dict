@@ -258,6 +258,28 @@ contract Games is PayableOwnable {
 		);
 	}
 
+	function changeCheckInStart(
+		uint gameID,
+		uint newValue
+	) public onlyLister(gameID) {
+		_changeCheckInStart(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeCheckInStart(
+		uint gameID,
+		uint newValue
+	) private {
+		emit CheckInStartChanged(
+			gameID,
+			games[gameID].checkInStart,
+			newValue
+		);
+		games[gameID].checkInStart = newValue;
+	}
+
 	/* TODO: Work through all the implications
 	* of allowing a change to the game token
 	* before enabling this function.
