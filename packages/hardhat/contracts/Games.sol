@@ -458,4 +458,26 @@ contract Games is PayableOwnable {
 		);
 		games[gameID].openToAnyAsker = newValue;
 	}
+
+	function changeSponsorFractionOfOptionPool(
+		uint gameID,
+		uint24 newValue
+	) public onlyLister(gameID) {
+		_changeSponsorFractionOfOptionPool(
+			gameID,
+			newValue
+		);
+	}
+
+	function _changeSponsorFractionOfOptionPool(
+		uint gameID,
+		uint24 newValue
+	) private {
+		emit SponsorFractionOfOptionPoolChanged(
+			gameID,
+			games[gameID].sponsorFractionOfOptionPool,
+			newValue
+		);
+		games[gameID].sponsorFractionOfOptionPool = newValue;
+	}
 }
