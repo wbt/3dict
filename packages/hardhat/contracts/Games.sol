@@ -5,7 +5,7 @@ import "./IGamesController.sol";
 import "./PayableOwnable.sol";
 
 contract Games is PayableOwnable {
-	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty game
+	uint256 maxUsedID = 0; // 0 is not actually used, but reserved for the undefined/empty reference
 	IGamesController controller;
 	struct Game {
 		address lister;
