@@ -51,34 +51,34 @@ contract App3Dict is Ownable{
 		uint256 newValue
 	);
 
-	event sponsorFractionOfQuestionPoolChange(
+	event SponsorFractionOfQuestionPoolChange(
 		uint24 oldValue,
 		uint24 newValue
 	);
 
-	event defaultSponsorFractionOfOptionPoolChange(
+	event DefaultSponsorFractionOfOptionPoolChange(
 		uint24 oldValue,
 		uint24 newValue
 	);
 
-	event tipReceived(
+	event TipReceived(
 		address donor,
 		uint256 amount
 	);
 
-	event publicGoodsPoolDonationReceived(
+	event PublicGoodsPoolDonationReceived(
 		address donor,
 		uint256 amount,
 		uint256 newPublicGoodsPoolUnpaidBalance
 	);
 
-	event publicGoodsPoolPayout(
+	event PublicGoodsPoolPayout(
 		address paidTo,
 		uint256 amountPaidOut,
 		uint256 newTotalPaidOut
 	);
 
-	event baseTokensPayout(
+	event BaseTokensPayout(
 		address paidTo,
 		uint256 amountPaidOut
 	);
@@ -161,7 +161,7 @@ contract App3Dict is Ownable{
 	function changeSponsorFractionOfQuestionPool(
 			uint24 newValue
 	) public onlyOwner {
-		emit sponsorFractionOfQuestionPoolChange(
+		emit SponsorFractionOfQuestionPoolChange(
 			sponsorFractionOfQuestionPool,
 			newValue
 		);
@@ -171,7 +171,7 @@ contract App3Dict is Ownable{
 	function changeDefaultSponsorFractionOfOptionPool(
 			uint24 newValue
 	) public onlyOwner {
-		emit defaultSponsorFractionOfOptionPoolChange(
+		emit DefaultSponsorFractionOfOptionPoolChange(
 			defaultSponsorFractionOfOptionPool,
 			newValue
 		);
@@ -182,7 +182,7 @@ contract App3Dict is Ownable{
 			uint256 amount
 	) public {
 		publicGoodsPoolUnpaidBalance += amount;
-		emit publicGoodsPoolDonationReceived(
+		emit PublicGoodsPoolDonationReceived(
 			msg.sender, //must have prior allowance
 			amount,
 			publicGoodsPoolUnpaidBalance
@@ -193,7 +193,7 @@ contract App3Dict is Ownable{
 	function tip(
 			uint256 amount
 	) public {
-		emit tipReceived(
+		emit TipReceived(
 			msg.sender, //must have prior allowance
 			amount
 		);
@@ -205,7 +205,7 @@ contract App3Dict is Ownable{
 			uint256 payAmount
 	) public onlyOwner {
 		require(payAmount <= publicGoodsPoolUnpaidBalance, 'Insufficient funds in public goods pool!');
-		emit publicGoodsPoolPayout(
+		emit PublicGoodsPoolPayout(
 			payTo,
 			payAmount,
 			publicGoodsPoolPaidOut + payAmount
@@ -223,7 +223,7 @@ contract App3Dict is Ownable{
 			payAmount <= (baseToken.balanceOf(address(this))-publicGoodsPoolUnpaidBalance),
 			'Insufficient funds to make the requested withdrawal!'
 		);
-		emit baseTokensPayout(
+		emit BaseTokensPayout(
 			payTo,
 			payAmount
 		);
