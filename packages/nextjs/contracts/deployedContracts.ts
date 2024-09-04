@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     App3Dict: {
-      address: "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+      address: "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
       abi: [
         {
           inputs: [
@@ -505,6 +505,25 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [
+            {
+              internalType: "address",
+              name: "potentialLister",
+              type: "address",
+            },
+          ],
+          name: "isAllowedToList",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [],
           name: "openToAnyLister",
           outputs: [
@@ -698,6 +717,7 @@ const deployedContracts = {
         renounceOwnership: "contracts/PayableOwnable.sol",
         transferOwnership: "contracts/PayableOwnable.sol",
         withdrawERC20Tokens: "contracts/PayableOwnable.sol",
+        isAllowedToList: "contracts/IGamesController.sol",
       },
     },
     USDME: {
