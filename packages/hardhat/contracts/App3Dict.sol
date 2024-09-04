@@ -1,4 +1,7 @@
 //SPDX-License-Identifier: UNLICENSED
+//This contract controls app-wide settings.
+//For the hackathon, the scaffold-eth "debug contracts" is a sufficient admin interface
+//to modify app-wide settings; an improved app manager interface is prioritized out of the MVP.
 pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
