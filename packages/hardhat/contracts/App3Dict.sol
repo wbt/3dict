@@ -27,17 +27,17 @@ contract App3Dict is PayableOwnable, IGamesController {
 	bool public openToAnyLister = false; //true on testnet, usually
 	mapping(address => bool) public approvedListers;
 
-	event BaseTokenChange(
+	event BaseTokenChanged(
 		IERC20 indexed oldBaseToken,
 		IERC20 indexed newBaseToken
 	);
 
-	event GameSponsorMinChange(
+	event GameSponsorMinChanged(
 		uint256 oldValue,
 		uint256 newValue
 	);
 
-	event QuestionSponsorMinChange(
+	event QuestionSponsorMinChanged(
 		uint256 oldValue,
 		uint256 newValue
 	);
@@ -47,22 +47,22 @@ contract App3Dict is PayableOwnable, IGamesController {
 		uint256 newValue
 	);
 
-	event SponsorFractionOfQuestionPoolChange(
+	event SponsorFractionOfQuestionPoolChanged(
 		uint24 oldValue,
 		uint24 newValue
 	);
 
-	event DefaultSponsorFractionOfOptionPoolChange(
+	event DefaultSponsorFractionOfOptionPoolChanged(
 		uint24 oldValue,
 		uint24 newValue
 	);
 
-	event OpenToAnyListerChange(
+	event OpenToAnyListerChanged(
 		bool oldValue,
 		bool newValue
 	);
 
-	event ApprovedListerChange(
+	event ApprovedListerChanged(
 		address lister,
 		bool wasApproved,
 		bool isApproved
@@ -104,9 +104,9 @@ contract App3Dict is PayableOwnable, IGamesController {
 		gameSponsorMin = 100 * 10 ** ERC20(_baseToken).decimals();
 		questionSponsorMin = 5 * 10 ** ERC20(_baseToken).decimals();
 		defaultMaxQuestionBid = 100 * 10 ** ERC20(_baseToken).decimals();
-		emit BaseTokenChange(ERC20(address(0)), _baseToken);
-		emit GameSponsorMinChange(0, gameSponsorMin);
-		emit QuestionSponsorMinChange(0, questionSponsorMin);
+		emit BaseTokenChanged(ERC20(address(0)), _baseToken);
+		emit GameSponsorMinChanged(0, gameSponsorMin);
+		emit QuestionSponsorMinChanged(0, questionSponsorMin);
 		emit DefaultMaxQuestionBidChanged(0, defaultMaxQuestionBid);
 	}
 
@@ -118,7 +118,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeBaseToken(
 		ERC20 newBaseToken
 	) public onlyOwner {
-		emit BaseTokenChange(
+		emit BaseTokenChanged(
 			_baseToken,
 			newBaseToken
 		);
@@ -128,7 +128,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeGameSponsorMin(
 		uint256 newValue
 	) public onlyOwner {
-		emit GameSponsorMinChange(
+		emit GameSponsorMinChanged(
 			gameSponsorMin,
 			newValue
 		);
@@ -138,7 +138,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeQuestionSponsorMin(
 		uint256 newValue
 	) public onlyOwner {
-		emit QuestionSponsorMinChange(
+		emit QuestionSponsorMinChanged(
 			questionSponsorMin,
 			newValue
 		);
@@ -158,7 +158,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeSponsorFractionOfQuestionPool(
 		uint24 newValue
 	) public onlyOwner {
-		emit SponsorFractionOfQuestionPoolChange(
+		emit SponsorFractionOfQuestionPoolChanged(
 			sponsorFractionOfQuestionPool,
 			newValue
 		);
@@ -168,7 +168,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeDefaultSponsorFractionOfOptionPool(
 		uint24 newValue
 	) public onlyOwner {
-		emit DefaultSponsorFractionOfOptionPoolChange(
+		emit DefaultSponsorFractionOfOptionPoolChanged(
 			defaultSponsorFractionOfOptionPool,
 			newValue
 		);
@@ -178,7 +178,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function changeOpenToAnyLister(
 		bool newValue
 	) public onlyOwner {
-		emit OpenToAnyListerChange(
+		emit OpenToAnyListerChanged(
 			openToAnyLister,
 			newValue
 		);
@@ -189,7 +189,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 		address lister,
 		bool shouldBeApproved
 	) public onlyOwner {
-		emit ApprovedListerChange(
+		emit ApprovedListerChanged(
 			lister,
 			approvedListers[lister],
 			shouldBeApproved
