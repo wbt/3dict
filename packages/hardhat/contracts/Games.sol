@@ -214,6 +214,10 @@ contract Games is PayableOwnable {
 			maxUsedGameID,
 			controller.baseToken()
 		);
+		_changeSponsorFractionOfOptionPool(
+			maxUsedGameID,
+			controller.defaultSponsorFractionOfOptionPool()
+		);
 	}
 
 	function changeLister(

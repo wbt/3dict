@@ -9,4 +9,6 @@ interface IGamesController {
 		function isAllowedToList(address potentialLister) external view returns (bool);
 
 		function baseToken() external view returns (IERC20);
+
+		function defaultSponsorFractionOfOptionPool() external view returns(uint24);
 }
