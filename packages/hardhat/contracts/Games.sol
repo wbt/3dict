@@ -23,7 +23,7 @@ contract Games is PayableOwnable {
 		bool checkInRequired;
 		uint24 sponsorFractionOfOptionPool; // A percentage (e.g. 2 for 2%) * 10^5; can’t be changed after CheckInStart
 		uint maxQuestionBid; // in token count per question per player.
-		uint askersNeedApproval;
+		bool openToAnyAsker;
 		mapping (address => int8) askerApprovals; //+1 for whitelist (only attened to if required), -1 for blacklist (though beware Sybils)
 		// Some of the information could go into an off-chain metadata file,
 		// with just one URL here.
