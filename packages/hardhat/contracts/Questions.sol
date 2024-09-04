@@ -6,20 +6,40 @@ import "./PayableOwnable.sol";
 
 contract Questions is PayableOwnable {
 
+	/*
+	//One previously considered alternate implementation was to
+	//have a question struct, like this:
 	struct Option {
 		string text; //up to 140 chars
 		uint16 resolutionFraction;
 		mapping(address => uint) playerPositions;
 		uint optionPool;
 	}
+	//and then include that within the Questions struct, like this:
+	Option[] options; //max length 26
+	//instead of
+	string[] options; //and other parallel arrays.
+	However, attempting to construct such a struct produces the error
+	"Struct containing a (nested) mapping cannot be constructed."
+	//Using an empty state variable like this:
+	mapping(address => uint) emptyMap;
+	//and then in addOptions copying it over like this:
+	mapping(address => uint) storage em = emptyMap;
+	//for use in a constructor like this:
+	rows[rowID].options.push(Question({text: options[i]}));
+	//seems like it would risk having any modifications to that mapping
+	//in the new question affect all others copied from the same source.
+	//With the struct strategy, resolution looks a bit different:
+	for(uint8 i=0; i<resolutionFractions.length; i++) {
+		rows[rowID].options[i].resolutionFraction = resolutionFractions[i];
+	}
+	*/
 
 	struct Question {
 		address lister;
 		uint game; //immutable
 		mapping(address => uint) sponsors; // uint is amount sponsored, in base tokens.
 		uint totalSponsoredAmount;
-		//TODO: Make Option its own struct?
-		//Option[] options; //max length 26
 		string[] options; //up to 26 strings each up to 140 chars
 		uint16[] resolutionFractions; //should total 10000 //or should that be -1000*sponsorFractionOfOptionPool?
 		mapping(address => uint)[] playerPositions;
@@ -509,7 +529,6 @@ contract Questions is PayableOwnable {
 			resolutionFractions
 		);
 		rows[rowID].isResolved = true;
-		//TODO: Process resolutionFractions, differently if using Options struct
 		rows[rowID].resolutionFractions = resolutionFractions;
 	}
 
