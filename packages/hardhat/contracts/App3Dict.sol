@@ -225,4 +225,12 @@ contract App3Dict is PayableOwnable {
 		require(baseToken.transfer(payTo, payAmount), 'Payout failed.');
 	}
 
+	function withdrawERC20Tokens(
+		address,
+		uint256,
+		IERC20
+	) override public pure {
+		revert('Arbitrary token withdrawal is disabled to protect the public goods balance.');
+	}
+
 }

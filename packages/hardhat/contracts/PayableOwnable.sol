@@ -29,7 +29,7 @@ contract PayableOwnable is Ownable {
 		address recipient,
 		uint256 payAmount,
 		IERC20 tokenContract
-	) public onlyOwner {
+	) virtual public onlyOwner {
 		require(_withdrawERC20Tokens(
 			recipient,
 			payAmount,
@@ -56,7 +56,7 @@ contract PayableOwnable is Ownable {
 	 * Function that allows the owner to withdraw all the Ether in the contract
 	 * The function can only be called by the owner of the contract as defined by the modifier
 	 */
-	function payoutEth(address payable recipient) public onlyOwner {
+	function payoutEth(address payable recipient) virtual public onlyOwner {
 		emit EthWithdrawal(
 			recipient,
 			address(this).balance
