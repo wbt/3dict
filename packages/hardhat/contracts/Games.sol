@@ -50,13 +50,13 @@ contract Games is PayableOwnable {
 	);
 
 	event ListerChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		address indexed oldLister,
 		address indexed newLister
 	);
 
 	event SponsorshipAdded(
-		uint indexed gameID,
+		uint indexed rowID,
 		address indexed sponsor,
 		uint amountAdded,
 		uint totalSponsorshipFromThisSponsor,
@@ -64,109 +64,109 @@ contract Games is PayableOwnable {
 	);
 
 	event CheckInStartChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint oldValue,
 		uint newValue
 	);
 
 	event EndTimeChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint oldValue,
 		uint newValue
 	);
 
 	event LocationIDChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint oldValue,
 		uint newValue
 	);
 
 	event RefereeAdded(
-		uint indexed gameID,
+		uint indexed rowID,
 		address indexed referee
 	);
 
 	event RefereeRemoved(
-		uint indexed gameID,
+		uint indexed rowID,
 		address indexed referee
 	);
 
 	event GameTokenChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		IERC20 oldValue,
 		IERC20 newValue
 	);
 
 	event CheckInRequiredChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		bool oldValue,
 		bool newValue
 	);
 
 	event OpenToAnyAskerChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		bool oldValue,
 		bool newValue
 	);
 
 	event SponsorFractionOfOptionPoolChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint24 oldValue,
 		uint24 newValue
 	);
 
 	event MaxQuestionBidChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint oldValue,
 		uint newValue
 	);
 
 	event AskerApprovalChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		address indexed asker,
 		int8 oldValue,
 		int8 newValue
 	);
 
 	event ImageURIChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		string oldValue,
 		string newValue
 	);
 
 	event Title140Changed(
-		uint indexed gameID,
+		uint indexed rowID,
 		string oldValue,
 		string newValue
 	);
 
 	event Descr500Changed(
-		uint indexed gameID,
+		uint indexed rowID,
 		string oldValue,
 		string newValue
 	);
 
 	event ListStartChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint oldValue,
 		uint newValue
 	);
 
 	event ListEndChanged(
-		uint indexed gameID,
+		uint indexed rowID,
 		uint oldValue,
 		uint newValue
 	);
 
 	error PropertyChangeAttemptByNonLister(address attempter);
 
-	modifier onlyLister(uint gameID) {
-		_checkLister(gameID); //Split out like OpenZeppelin's Ownable contract
+	modifier onlyLister(uint rowID) {
+		_checkLister(rowID); //Split out like OpenZeppelin's Ownable contract
 		_;
 	}
 
-	function _checkLister(uint gameID) internal view virtual {
-		if (games[gameID].lister != msg.sender) {
+	function _checkLister(uint rowID) internal view virtual {
+		if (games[rowID].lister != msg.sender) {
 			revert PropertyChangeAttemptByNonLister(_msgSender());
 		}
 	}
@@ -222,173 +222,173 @@ contract Games is PayableOwnable {
 	}
 
 	function changeLister(
-		uint gameID,
+		uint rowID,
 		address newLister
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeLister(
-			gameID,
+			rowID,
 			newLister
 		);
 	}
 
 	function _changeLister(
-		uint gameID,
+		uint rowID,
 		address newLister
 	) private {
 		emit ListerChanged(
-			gameID,
-			games[gameID].lister,
+			rowID,
+			games[rowID].lister,
 			newLister
 		);
-		games[gameID].lister = newLister;
+		games[rowID].lister = newLister;
 	}
 
 	function addSponsorship(
-		uint gameID,
+		uint rowID,
 		uint amountToAdd,
 		address sponsor
 	) public {
-		games[gameID].sponsors[sponsor] += amountToAdd;
-		games[gameID].totalSponsoredAmount += amountToAdd;
+		games[rowID].sponsors[sponsor] += amountToAdd;
+		games[rowID].totalSponsoredAmount += amountToAdd;
 		emit SponsorshipAdded(
-			gameID,
+			rowID,
 			sponsor,
 			amountToAdd,
-			games[gameID].sponsors[sponsor],
-			games[gameID].totalSponsoredAmount
+			games[rowID].sponsors[sponsor],
+			games[rowID].totalSponsoredAmount
 		);
 		require(
-			games[gameID].gameToken.transferFrom(msg.sender, address(controller), amountToAdd),
+			games[rowID].gameToken.transferFrom(msg.sender, address(controller), amountToAdd),
 			'Sponsorship addition failed.'
 		);
 	}
 
 	function changeCheckInStart(
-		uint gameID,
+		uint rowID,
 		uint newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeCheckInStart(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeCheckInStart(
-		uint gameID,
+		uint rowID,
 		uint newValue
 	) private {
 		emit CheckInStartChanged(
-			gameID,
-			games[gameID].checkInStart,
+			rowID,
+			games[rowID].checkInStart,
 			newValue
 		);
-		games[gameID].checkInStart = newValue;
+		games[rowID].checkInStart = newValue;
 	}
 
 	function changeEndTime(
-		uint gameID,
+		uint rowID,
 		uint newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeEndTime(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeEndTime(
-		uint gameID,
+		uint rowID,
 		uint newValue
 	) private {
 		emit EndTimeChanged(
-			gameID,
-			games[gameID].endTime,
+			rowID,
+			games[rowID].endTime,
 			newValue
 		);
-		games[gameID].endTime = newValue;
+		games[rowID].endTime = newValue;
 	}
 
 	function changeLocationID(
-		uint gameID,
+		uint rowID,
 		uint newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeLocationID(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeLocationID(
-		uint gameID,
+		uint rowID,
 		uint newValue
 	) private {
 		emit LocationIDChanged(
-			gameID,
-			games[gameID].locationID,
+			rowID,
+			games[rowID].locationID,
 			newValue
 		);
-		games[gameID].locationID = newValue;
+		games[rowID].locationID = newValue;
 	}
 
 	function addReferee(
-		uint gameID,
+		uint rowID,
 		address referee
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_addReferee(
-			gameID,
+			rowID,
 			referee
 		);
 	}
 
 	function _addReferee(
-		uint gameID,
+		uint rowID,
 		address referee
 	) private {
 		bool found = false;
-		for(uint i = 0; i<games[gameID].referees.length; i++) {
-			if(games[gameID].referees[i] == referee) {
+		for(uint i = 0; i<games[rowID].referees.length; i++) {
+			if(games[rowID].referees[i] == referee) {
 				found = true;
 			}
 		}
 		if(!found) {
-			games[gameID].referees.push(referee);
+			games[rowID].referees.push(referee);
 			emit RefereeAdded(
-				gameID,
+				rowID,
 				referee
 			);
 		}
 	}
 
 	function removeReferee(
-		uint gameID,
+		uint rowID,
 		address referee
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_removeReferee(
-			gameID,
+			rowID,
 			referee
 		);
 	}
 
 	function _removeReferee(
-		uint gameID,
+		uint rowID,
 		address referee
 	) private {
 		bool found = false;
 		uint foundAt = 0;
-		for(uint i = 0; i<games[gameID].referees.length; i++) {
-			if(games[gameID].referees[i] == referee) {
+		for(uint i = 0; i<games[rowID].referees.length; i++) {
+			if(games[rowID].referees[i] == referee) {
 				found = true;
 				foundAt = i;
 			}
 		}
 		if(found) {
-			if(foundAt < games[gameID].referees.length-1) {
+			if(foundAt < games[rowID].referees.length-1) {
 				//if not the last element in the array, move the last element into the place being vacated
-				games[gameID].referees[foundAt] = games[gameID].referees[games[gameID].referees.length-1];
+				games[rowID].referees[foundAt] = games[rowID].referees[games[rowID].referees.length-1];
 			}
 			//Then drop the last element
-			games[gameID].referees.pop();
+			games[rowID].referees.pop();
 			emit RefereeRemoved(
-				gameID,
+				rowID,
 				referee
 			);
 		}
@@ -398,250 +398,250 @@ contract Games is PayableOwnable {
 	* of allowing a change to the game token
 	* before enabling this function.
 	function changeGameToken(
-		uint gameID,
+		uint rowID,
 		IERC20 newToken
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeGameToken(
-			gameID,
+			rowID,
 			newToken
 		);
 	}
 	*/
 
 	function _changeGameToken(
-		uint gameID,
+		uint rowID,
 		IERC20 newToken
 	) private {
 		emit GameTokenChanged(
-			gameID,
-			games[gameID].gameToken,
+			rowID,
+			games[rowID].gameToken,
 			newToken
 		);
-		games[gameID].gameToken = newToken;
+		games[rowID].gameToken = newToken;
 	}
 
 	function changeCheckInRequired(
-		uint gameID,
+		uint rowID,
 		bool newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeCheckInRequired(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeCheckInRequired(
-		uint gameID,
+		uint rowID,
 		bool newValue
 	) private {
 		emit CheckInRequiredChanged(
-			gameID,
-			games[gameID].checkInRequired,
+			rowID,
+			games[rowID].checkInRequired,
 			newValue
 		);
-		games[gameID].checkInRequired = newValue;
+		games[rowID].checkInRequired = newValue;
 	}
 
 	function changeOpenToAnyAsker(
-		uint gameID,
+		uint rowID,
 		bool newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeOpenToAnyAsker(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeOpenToAnyAsker(
-		uint gameID,
+		uint rowID,
 		bool newValue
 	) private {
 		emit OpenToAnyAskerChanged(
-			gameID,
-			games[gameID].openToAnyAsker,
+			rowID,
+			games[rowID].openToAnyAsker,
 			newValue
 		);
-		games[gameID].openToAnyAsker = newValue;
+		games[rowID].openToAnyAsker = newValue;
 	}
 
 	function changeSponsorFractionOfOptionPool(
-		uint gameID,
+		uint rowID,
 		uint24 newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeSponsorFractionOfOptionPool(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeSponsorFractionOfOptionPool(
-		uint gameID,
+		uint rowID,
 		uint24 newValue
 	) private {
 		emit SponsorFractionOfOptionPoolChanged(
-			gameID,
-			games[gameID].sponsorFractionOfOptionPool,
+			rowID,
+			games[rowID].sponsorFractionOfOptionPool,
 			newValue
 		);
-		games[gameID].sponsorFractionOfOptionPool = newValue;
+		games[rowID].sponsorFractionOfOptionPool = newValue;
 	}
 
 	function changeMaxQuestionBid(
-		uint gameID,
+		uint rowID,
 		uint newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeMaxQuestionBid(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeMaxQuestionBid(
-		uint gameID,
+		uint rowID,
 		uint newValue
 	) private {
 		emit MaxQuestionBidChanged(
-			gameID,
-			games[gameID].maxQuestionBid,
+			rowID,
+			games[rowID].maxQuestionBid,
 			newValue
 		);
-		games[gameID].maxQuestionBid = newValue;
+		games[rowID].maxQuestionBid = newValue;
 	}
 
 	function changeAskerApproval(
-		uint gameID,
+		uint rowID,
 		address asker,
 		int8 newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeAskerApproval(
-			gameID,
+			rowID,
 			asker,
 			newValue
 		);
 	}
 
 	function _changeAskerApproval(
-		uint gameID,
+		uint rowID,
 		address asker,
 		int8 newValue
 	) private {
 		emit AskerApprovalChanged(
-			gameID,
+			rowID,
 			asker,
-			games[gameID].askerApprovals[asker],
+			games[rowID].askerApprovals[asker],
 			newValue
 		);
-		games[gameID].askerApprovals[asker] = newValue;
+		games[rowID].askerApprovals[asker] = newValue;
 	}
 
 	function changeImageURI(
-		uint gameID,
+		uint rowID,
 		string calldata newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeImageURI(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeImageURI(
-		uint gameID,
+		uint rowID,
 		string calldata newValue
 	) private {
 		emit ImageURIChanged(
-			gameID,
-			games[gameID].imageURI,
+			rowID,
+			games[rowID].imageURI,
 			newValue
 		);
-		games[gameID].imageURI = newValue;
+		games[rowID].imageURI = newValue;
 	}
 
 	function changeTitle140(
-		uint gameID,
+		uint rowID,
 		string calldata newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeTitle140(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeTitle140(
-		uint gameID,
+		uint rowID,
 		string calldata newValue
 	) private {
 		emit Title140Changed(
-			gameID,
-			games[gameID].title140,
+			rowID,
+			games[rowID].title140,
 			newValue
 		);
-		games[gameID].title140 = newValue;
+		games[rowID].title140 = newValue;
 	}
 
 	function changeDescr500(
-		uint gameID,
+		uint rowID,
 		string calldata newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeDescr500(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeDescr500(
-		uint gameID,
+		uint rowID,
 		string calldata newValue
 	) private {
 		emit Descr500Changed(
-			gameID,
-			games[gameID].descr500,
+			rowID,
+			games[rowID].descr500,
 			newValue
 		);
-		games[gameID].descr500 = newValue;
+		games[rowID].descr500 = newValue;
 	}
 
 	function changeListStart(
-		uint gameID,
+		uint rowID,
 		uint newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeListStart(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeListStart(
-		uint gameID,
+		uint rowID,
 		uint newValue
 	) private {
 		emit ListStartChanged(
-			gameID,
-			games[gameID].listStart,
+			rowID,
+			games[rowID].listStart,
 			newValue
 		);
-		games[gameID].listStart = newValue;
+		games[rowID].listStart = newValue;
 	}
 
 	function changeListEnd(
-		uint gameID,
+		uint rowID,
 		uint newValue
-	) public onlyLister(gameID) {
+	) public onlyLister(rowID) {
 		_changeListEnd(
-			gameID,
+			rowID,
 			newValue
 		);
 	}
 
 	function _changeListEnd(
-		uint gameID,
+		uint rowID,
 		uint newValue
 	) private {
 		emit ListEndChanged(
-			gameID,
-			games[gameID].listEnd,
+			rowID,
+			games[rowID].listEnd,
 			newValue
 		);
-		games[gameID].listEnd = newValue;
+		games[rowID].listEnd = newValue;
 	}
 
 }
