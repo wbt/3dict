@@ -208,6 +208,16 @@ contract Games is PayableOwnable {
 		uint gameID,
 		address newLister
 	) public onlyLister(gameID) {
+		_changeLister(
+			gameID,
+			newLister
+		);
+	}
+
+	function _changeLister(
+		uint gameID,
+		address newLister
+	) private {
 		emit ListerChanged(
 			gameID,
 			games[gameID].lister,
