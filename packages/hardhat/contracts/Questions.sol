@@ -553,6 +553,28 @@ contract Questions is PayableOwnable {
 		);
 	}
 
+	function resolveToOption(
+		uint rowID,
+		uint8 optionID
+	) public onlyReferee(rowID) onlyIfValidOptionID(rowID, optionID) {
+		_resolveToOption(
+			rowID,
+			optionID
+		);
+	}
+
+	function _resolveToOption(
+		uint rowID,
+		uint8 optionID
+	) private {
+		uint16[] memory resolutionFractions = new uint16[](rows[rowID].options.length);
+		resolutionFractions[optionID] = 10000;
+		_resolve(
+			rowID,
+			resolutionFractions
+		);
+	}
+
 	function resolve(
 		uint rowID,
 		uint16[] memory resolutionFractions
