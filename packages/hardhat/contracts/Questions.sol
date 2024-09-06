@@ -740,7 +740,8 @@ contract Questions is PayableOwnable {
 				//The other operator to the min function is a uint so it's guaranteed positive, and if it's beyond the int range
 				//then it definitely won't be the minimum of the two arguments so it won't be the result of the min function.
 				amount = -1*int(cappedPositiveAmount);
-			} else {
+			}
+			if(!rows[rowID].unresolvable) {
 				//Cap withdrawal to free balance on question.
 				//This cap does not apply if it's deemed unresolvable;
 				//in that case the cap is the net amount put into the question.
