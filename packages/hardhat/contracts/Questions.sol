@@ -3,6 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "./IQuestionsController.sol";
 import "./PayableOwnable.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 
 contract Questions is PayableOwnable {
 
@@ -54,6 +55,7 @@ contract Questions is PayableOwnable {
 		//Can't remove more until resolution, in case it's unresolvable and moves incl. winnings are reversed.
 		mapping(address => uint) playerTotalInputs; // Might be > sum(player's positions), should match when including playerFreeBalanceOnQuestion.
 		mapping(address => uint) playerFreeBalanceOnQuestion; // Might be > sum(player's positions).
+		uint freeBalanceSum;
 		bool isResolved; //irreversible
 		bool unresolvable; //irreversible
 		bool optionsLocked; //reversible
@@ -706,6 +708,39 @@ contract Questions is PayableOwnable {
 			newValue
 		);
 		rows[rowID].descr500 = newValue;
+	}
+
+	function moveTokensIntoOrOutOfQuestionFreeBalance(
+		uint rowID,
+		int amount
+	) public {
+		if(amount == 0) {
+			//do nothing.
+			return;
+		} else if(amount > 0) { //Depositing into question free balance
+			//Cap total amount deposited to MaxQuestionBid:
+			amount = Math.min(amount, controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender]);
+			require(controller.gameToken(rows[rowID].game).transferFrom(msg.sender, address(this), uint256(amount)), 'Token transfer failed.');
+		} else { //Withdrawal from question free balance
+			if(rows[rowID].unresolvable) {
+				//Cap withdrawal to amount that was put in.
+				amount = Math.max(amount, -1*rows[rowID].playerTotalInputs(msg.sender));
+			} else {
+				//Cap withdrawal to free balance on question.
+				//This cap does not apply if it's deemed unresolvable;
+				//in that case the cap is the net amount put into the question.
+				amount = Math.max(amount, -1*rows[rowID].playerFreeBalanceOnQuestion(msg.sender));
+			}
+			//An extra safety check to limit withdrawals.
+			//This shouldn't be needed, but it's a guardrail until a more throrough
+			//tokenomics review can be conducted.
+			amount = Math.max(amount, -1*rows[rowID].freeBalanceSum);
+			require(controller.gameToken(rows[rowID].game).transfer(msg.sender, uint256(-1*amount)), 'Token transfer failed.');
+		}
+		//TODO: Get better about checks-effects-interactions here
+		rows[rowID].playerTotalInputs[msg.sender] += amount;
+		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] += amount;
+		rows[rowID].freeBalanceSum += amount;
 	}
 
 }
