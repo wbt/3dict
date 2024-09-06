@@ -728,7 +728,8 @@ contract Questions is PayableOwnable {
 			amount = int(cappedAmount);
 			require(controller.gameToken(rows[rowID].game).transferFrom(msg.sender, address(this), uint256(amount)), 'Token transfer failed.');
 		} else { //Withdrawal from question free balance
-			if(rows[rowID].unresolvable) {
+			if(!rows[rowID].isResolved) {
+				//unresolvable, or unknown if it's resolvable:
 				//Cap withdrawal to amount that was put in.
 				uint cappedPositiveAmount = Math.min(
 					uint(-1*amount), //valid cast due to being in an (amount < 0) conditional block.
