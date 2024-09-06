@@ -16,7 +16,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	ERC20 private _baseToken; //baseToken() getter returns IERC20
 	uint256 public gameSponsorMin;
 	uint256 public questionSponsorMin;
-	uint256 public defaultMaxQuestionBid;
+	uint256 public defaultMaxQuestionBid; //< 2**255
 	uint24 public sponsorFractionOfQuestionPool = 20*100000; // A percentage (e.g. 20 for 20%) * 10^5
 	uint24 public defaultSponsorFractionOfOptionPool = 2*100000; // A percentage (e.g. 2 for 2%) * 10^5
 	uint256 public publicGoodsPoolUnpaidBalance = 0;
@@ -100,6 +100,8 @@ contract App3Dict is PayableOwnable, IGamesController {
 		// Verify support before using any particular token in the constructor.
 		_changeGameSponsorMin(100 * 10 ** ERC20(_baseToken).decimals());
 		_changeQuestionSponsorMin(5 * 10 ** ERC20(_baseToken).decimals());
+		//If the values of decimals is so high that this is beyond the range of MaxQuestionBid,
+		//the private function will revert, to ensure the value is within the range.
 		_changeDefaultMaxQuestionBid(100 * 10 ** ERC20(_baseToken).decimals());
 	}
 
@@ -165,6 +167,7 @@ contract App3Dict is PayableOwnable, IGamesController {
 	function _changeDefaultMaxQuestionBid(
 		uint256 newValue
 	) private {
+		require(newValue < 2**255, 'Default max question bid is out of the allowed range.');
 		emit DefaultMaxQuestionBidChanged(
 			defaultMaxQuestionBid,
 			newValue

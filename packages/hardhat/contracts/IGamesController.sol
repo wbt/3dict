@@ -10,6 +10,7 @@ interface IGamesController {
 
 		function baseToken() external view returns (IERC20);
 
+		// The implementing code must also GUARANTEE this value is in the positive int range, < 2**255.
 		function defaultMaxQuestionBid() external view returns (uint256);
 
 		function defaultSponsorFractionOfOptionPool() external view returns (uint24);
