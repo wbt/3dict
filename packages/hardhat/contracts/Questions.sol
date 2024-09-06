@@ -49,10 +49,10 @@ contract Questions is PayableOwnable {
 		uint[] optionPoolsTokens; //sum of money (tokens) put in to that
 		uint[] optionPoolsTickets; //sum over players
 		uint optionPoolsTokensSum; // sum of the above array, but helps accelerate math
-		//playerTotalInputs: uint is net amount total amount put in, in base tokens.
+		//playerTotalInputs: value is net amount total amount put in, in base tokens.
 		//Adjusts only on moving tokens in and out of question, not among options.
 		//Can't remove more until resolution, in case it's unresolvable and moves incl. winnings are reversed.
-		mapping(address => uint) playerTotalInputs; // Might be > sum(player's positions), should match when including playerFreeBalanceOnQuestion.
+		mapping(address => int) playerTotalInputs; // Could be negative if player had net winnings
 		mapping(address => uint) playerFreeBalanceOnQuestion; // Don't set directly! Use _adjustPlayerFreeBalance only.
 		uint freeBalanceSum; // Don't set directly! Use _adjustPlayerFreeBalance only.
 		bool isResolved; //irreversible
