@@ -799,8 +799,8 @@ contract Questions is PayableOwnable {
 		int amountToIncreaseFreeBalanceBy
 	) private {
 		//This fn exists to make sure these two state variables are always changed together:
-		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] += amountToIncreaseFreeBalanceBy;
-		rows[rowID].freeBalanceSum += amountToIncreaseFreeBalanceBy;
+		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] = rows[rowID].playerFreeBalanceOnQuestion[msg.sender] + amountToIncreaseFreeBalanceBy;
+		rows[rowID].freeBalanceSum = rows[rowID].freeBalanceSum + amountToIncreaseFreeBalanceBy;
 	}
 
 	}
