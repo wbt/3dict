@@ -52,6 +52,7 @@ contract Questions is PayableOwnable {
 		mapping(address => int) playerTotalInputs; // Might be > sum(player's positions).
 		bool isResolved; //irreversible
 		bool unresolvable; //irreversible
+		bool optionsLocked; //reversible
 		uint startTime;
 		uint endTime; // for autopayout
 		// See Games contract for comments about off-chain metadata
@@ -127,6 +128,12 @@ contract Questions is PayableOwnable {
 		uint indexed rowID,
 		bool isUnresolvable,
 		uint16[] resolutionFractions
+	);
+
+	event OptionsLockedChanged(
+		uint indexed rowID,
+		bool oldValue,
+		bool newValue
 	);
 
 	event StartTimeChanged(
@@ -603,6 +610,28 @@ contract Questions is PayableOwnable {
 		);
 		rows[rowID].isResolved = true;
 		rows[rowID].resolutionFractions = resolutionFractions;
+	}
+
+	function changeOptionsLocked(
+		uint rowID,
+		bool newValue
+	) public onlyReferee(rowID) {
+		_changeOptionsLocked(
+			rowID,
+			newValue
+		);
+	}
+
+	function _changeOptionsLocked(
+		uint rowID,
+		bool newValue
+	) private {
+		emit OptionsLockedChanged(
+			rowID,
+			rows[rowID].optionsLocked,
+			newValue
+		);
+		rows[rowID].optionsLocked = newValue;
 	}
 
 	function changeImageURI(
