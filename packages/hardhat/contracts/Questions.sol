@@ -718,10 +718,14 @@ contract Questions is PayableOwnable {
 			return;
 		} else if(amount > 0) { //Depositing into question free balance
 			//Cap total amount deposited to MaxQuestionBid:
-			amount = Math.min(
-				amount,
+			uint cappedAmount = Math.min(
+				uint(amount), //valid cast due to being in if(amount>0) conditional block.
 				controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender]
 			);
+			//cappedAmount is guaranteed to be within the positive int range because it is the lesser of:
+			//amount, a positive (within the if amount>0 block) value within the int range (it's an int parameter)
+			//maxQuestionBid for the game, which is guaranteed within the int range by the controller interface
+			amount = int(cappedAmount);
 			require(controller.gameToken(rows[rowID].game).transferFrom(msg.sender, address(this), uint256(amount)), 'Token transfer failed.');
 		} else { //Withdrawal from question free balance
 			if(rows[rowID].unresolvable) {
