@@ -717,10 +717,11 @@ contract Questions is PayableOwnable {
 			//do nothing.
 			return;
 		} else if(amount > 0) { //Depositing into question free balance
+			uint roomLeftToMaxQuestionBid = controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender];
 			//Cap total amount deposited to MaxQuestionBid:
 			uint cappedAmount = Math.min(
 				uint(amount), //valid cast due to being in if(amount>0) conditional block.
-				controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender]
+				roomLeftToMaxQuestionBid
 			);
 			//cappedAmount is guaranteed to be within the positive int range because it is the lesser of:
 			//amount, a positive (within the if amount>0 block) value within the int range (it's an int parameter)
