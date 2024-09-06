@@ -461,7 +461,10 @@ contract Questions is PayableOwnable {
 			optionID,
 			rows[rowID].options[optionID]
 		);
-		require(rows[rowID].optionPoolsTickets[optionID] <= 0, 'Cannot delete an option when players have an open position in it.');
+		require(
+			rows[rowID].optionPoolsTickets[optionID] <= 0,
+			'Cannot delete an option when players have an open position in it.'
+		);
 		rows[rowID].optionRemoved[optionID] = true;
 	}
 
