@@ -723,12 +723,12 @@ contract Questions is PayableOwnable {
 		} else { //Withdrawal from question free balance
 			if(rows[rowID].unresolvable) {
 				//Cap withdrawal to amount that was put in.
-				amount = Math.max(amount, -1*rows[rowID].playerTotalInputs(msg.sender));
+				amount = Math.max(amount, -1*rows[rowID].playerTotalInputs[msg.sender]);
 			} else {
 				//Cap withdrawal to free balance on question.
 				//This cap does not apply if it's deemed unresolvable;
 				//in that case the cap is the net amount put into the question.
-				amount = Math.max(amount, -1*rows[rowID].playerFreeBalanceOnQuestion(msg.sender));
+				amount = Math.max(amount, -1*rows[rowID].playerFreeBalanceOnQuestion[msg.sender]);
 			}
 			//An extra safety check to limit withdrawals.
 			//This shouldn't be needed, but it's a guardrail until a more throrough
