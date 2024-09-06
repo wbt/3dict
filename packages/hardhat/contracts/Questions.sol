@@ -731,9 +731,10 @@ contract Questions is PayableOwnable {
 			if(!rows[rowID].isResolved) {
 				//unresolvable, or unknown if it's resolvable:
 				//Cap withdrawal to amount that was put in.
+				require(rows[rowID].playerTotalInputs[msg.sender] >= 0, 'Contract bug: player was allowed to withdraw more than they put in on question later found unresolvable!');
 				uint cappedPositiveAmount = Math.min(
 					uint(-1*amount), //valid cast due to being in an (amount < 0) conditional block.
-					rows[rowID].playerTotalInputs[msg.sender]
+					uint(rows[rowID].playerTotalInputs[msg.sender]) //valid cast due to require statement above
 				);
 				//cappedPositiveAmount is guaranteed to be within the positive int range, as the result of a min function between:
 				//The param "amount" which is guaranteed to be in the int range (it's incoming as an int type)
