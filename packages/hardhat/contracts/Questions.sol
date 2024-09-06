@@ -49,7 +49,6 @@ contract Questions is PayableOwnable {
 		uint[] optionPoolsTokens; //sum of money (tokens) put in to that
 		uint[] optionPoolsTickets; //sum over players
 		uint optionPoolsTokensSum; // sum of the above array, but helps accelerate math
-		uint optionPoolsTicketsSum; // sum of the above array, but helps accelerate math
 		//playerTotalInputs: uint is net amount total amount put in, in base tokens.
 		//Adjusts only on moving tokens in and out of question, not among options.
 		//Can't remove more until resolution, in case it's unresolvable and moves incl. winnings are reversed.
