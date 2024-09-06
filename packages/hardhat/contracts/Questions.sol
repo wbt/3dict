@@ -798,6 +798,7 @@ contract Questions is PayableOwnable {
 		address player,
 		int amountToIncreaseFreeBalanceBy
 	) private {
+		if(amountToIncreaseFreeBalanceBy >= 0) {
 		//This fn exists to make sure these two state variables are always changed together:
 		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] =
 			rows[rowID].playerFreeBalanceOnQuestion[msg.sender] +
@@ -807,8 +808,18 @@ contract Questions is PayableOwnable {
 			rows[rowID].freeBalanceSum +
 			amountToIncreaseFreeBalanceBy
 		;
+		} else {
+		//This fn exists to make sure these two state variables are always changed together:
+		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] =
+			rows[rowID].playerFreeBalanceOnQuestion[msg.sender] +
+			amountToIncreaseFreeBalanceBy
+		;
+		rows[rowID].freeBalanceSum =
+			rows[rowID].freeBalanceSum +
+			amountToIncreaseFreeBalanceBy
+		;
+		}
 	}
-
 	}
 
 }
