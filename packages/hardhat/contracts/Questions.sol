@@ -53,8 +53,8 @@ contract Questions is PayableOwnable {
 		//Adjusts only on moving tokens in and out of question, not among options.
 		//Can't remove more until resolution, in case it's unresolvable and moves incl. winnings are reversed.
 		mapping(address => uint) playerTotalInputs; // Might be > sum(player's positions), should match when including playerFreeBalanceOnQuestion.
-		mapping(address => uint) playerFreeBalanceOnQuestion; // Might be > sum(player's positions).
-		uint freeBalanceSum;
+		mapping(address => uint) playerFreeBalanceOnQuestion; // Don't set directly! Use _adjustPlayerFreeBalance only.
+		uint freeBalanceSum; // Don't set directly! Use _adjustPlayerFreeBalance only.
 		bool isResolved; //irreversible
 		bool unresolvable; //irreversible
 		bool optionsLocked; //reversible
@@ -738,8 +738,19 @@ contract Questions is PayableOwnable {
 		}
 		//TODO: Get better about checks-effects-interactions here
 		rows[rowID].playerTotalInputs[msg.sender] += amount;
-		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] += amount;
-		rows[rowID].freeBalanceSum += amount;
+		_adjustPlayerFreeBalance(rowID, msg.sender, amount);
+	}
+
+	function _adjustPlayerFreeBalance(
+		uint rowID,
+		address player,
+		int amountToIncreaseFreeBalanceBy
+	) private {
+		//This fn exists to make sure these two lines always stay together:
+		rows[rowID].playerFreeBalanceOnQuestion[msg.sender] += amountToIncreaseFreeBalanceBy;
+		rows[rowID].freeBalanceSum += amountToIncreaseFreeBalanceBy;
+	}
+
 	}
 
 }
