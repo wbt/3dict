@@ -43,9 +43,12 @@ contract Questions is PayableOwnable {
 		string[] options; //up to 26 strings each up to 140 chars
 		bool[] optionRemoved;
 		uint16[] resolutionFractions; //should total 10000 //or should that be -1000*sponsorFractionOfOptionPool?
-		mapping(address => uint)[] playerPositions;
-		uint[] optionPools;
-		uint optionPoolsSum; // sum of the above array, but helps accelerate math
+		mapping(address => uint)[] playerPositions; //denominated in TICKETS
+		//mapping(address => uint)[] playerFundsInOptions; //doesn't seem necessary to track
+		uint[] optionPoolsTokens; //sum of money (tokens) put in to that
+		uint[] optionPoolsTickets; //sum over players
+		uint optionPoolsTokensSum; // sum of the above array, but helps accelerate math
+		uint optionPoolsTicketsSum; // sum of the above array, but helps accelerate math
 		//playerTotalInputs: uint is net amount total amount put in, in base tokens.
 		//Adjusts only on moving tokens in and out of question, not among options.
 		//Can't remove more until resolution, in case it's unresolvable and moves incl. winnings are reversed.
@@ -403,7 +406,8 @@ contract Questions is PayableOwnable {
 					options[i]
 				);
 				rows[rowID].options.push(options[i]);
-				rows[rowID].optionPools.push(0);
+				rows[rowID].optionPoolsTokens.push(0);
+				rows[rowID].optionPoolsTickets.push(0);
 				rows[rowID].playerPositions.push({});
 			}
 		}
@@ -457,7 +461,7 @@ contract Questions is PayableOwnable {
 			optionID,
 			rows[rowID].options[optionID]
 		);
-		require(rows[rowID].optionPools[optionID] <= 0, 'Cannot delete an option when players have an open position in it.');
+		require(rows[rowID].optionPoolsTickets[optionID] <= 0, 'Cannot delete an option when players have an open position in it.');
 		rows[rowID].optionRemoved[optionID] = true;
 	}
 
@@ -553,7 +557,7 @@ contract Questions is PayableOwnable {
 	) private {
 		uint16[] memory resolutionFractions = new uint16[](rows[rowID].options.length);
 		for(uint i=0; i<rows[rowID].options.length; i++) {
-			resolutionFractions[i] = uint16(10000*rows[rowID].optionPools[i] / rows[rowID].optionPoolsSum);
+			resolutionFractions[i] = uint16(10000*rows[rowID].optionPoolsTokens[i] / rows[rowID].optionPoolsTokensSum);
 		}
 		_resolve(
 			rowID,
