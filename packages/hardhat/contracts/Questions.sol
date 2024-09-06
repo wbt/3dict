@@ -718,22 +718,34 @@ contract Questions is PayableOwnable {
 			return;
 		} else if(amount > 0) { //Depositing into question free balance
 			//Cap total amount deposited to MaxQuestionBid:
-			amount = Math.min(amount, controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender]);
+			amount = Math.min(
+				amount,
+				controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender]
+			);
 			require(controller.gameToken(rows[rowID].game).transferFrom(msg.sender, address(this), uint256(amount)), 'Token transfer failed.');
 		} else { //Withdrawal from question free balance
 			if(rows[rowID].unresolvable) {
 				//Cap withdrawal to amount that was put in.
-				amount = Math.max(amount, -1*rows[rowID].playerTotalInputs[msg.sender]);
+				amount = Math.max(
+					amount,
+					-1*rows[rowID].playerTotalInputs[msg.sender]
+				);
 			} else {
 				//Cap withdrawal to free balance on question.
 				//This cap does not apply if it's deemed unresolvable;
 				//in that case the cap is the net amount put into the question.
-				amount = Math.max(amount, -1*rows[rowID].playerFreeBalanceOnQuestion[msg.sender]);
+				amount = Math.max(
+					amount,
+					-1*rows[rowID].playerFreeBalanceOnQuestion[msg.sender]
+				);
 			}
 			//An extra safety check to limit withdrawals.
 			//This shouldn't be needed, but it's a guardrail until a more throrough
 			//tokenomics review can be conducted.
-			amount = Math.max(amount, -1*rows[rowID].freeBalanceSum);
+			amount = Math.max(
+				amount,
+				-1*rows[rowID].freeBalanceSum
+			);
 			require(controller.gameToken(rows[rowID].game).transfer(msg.sender, uint256(-1*amount)), 'Token transfer failed.');
 		}
 		//TODO: Get better about checks-effects-interactions here
