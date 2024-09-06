@@ -709,6 +709,12 @@ contract Questions is PayableOwnable {
 		rows[rowID].descr500 = newValue;
 	}
 
+	function hasResolved(
+		uint rowID
+	) public view returns (bool) {
+		return rows[rowID].isResolved || rows[rowID].unresolvable;
+	}
+
 	function moveTokensIntoOrOutOfQuestionFreeBalance(
 		uint rowID,
 		int amount
@@ -717,9 +723,22 @@ contract Questions is PayableOwnable {
 			//do nothing.
 			return;
 		} else if(amount > 0) { //Depositing into question free balance
+			require(
+				!hasResolved(rowID),
+				'Cannot deposit outside funds into a resolved question; you can only withdraw.'
+			);
+			require(
+				rows[rowID].playerTotalInputs[msg.sender] >= 0,
+				'Contract bug: player was allowed to withdraw more than they put in on question before resolution!'
+			);
+			require(
+				//Cast at start of next line is valid due to the immediately preceding require statement
+				uint(rows[rowID].playerTotalInputs[msg.sender]) <= controller.maxQuestionBid(rows[rowID].game),
+				'Contract bug: player was allowed to exceed maximum bid on question!'
+			);
 			uint roomLeftToMaxQuestionBid =
 				controller.maxQuestionBid(rows[rowID].game) -
-				rows[rowID].playerTotalInputs[msg.sender]
+				uint(rows[rowID].playerTotalInputs[msg.sender]) //valid cast due to the contract bug check in the require statement above
 			;
 			//Cap total amount deposited to MaxQuestionBid:
 			uint cappedAmount = Math.min(
