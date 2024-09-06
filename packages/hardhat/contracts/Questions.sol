@@ -717,7 +717,10 @@ contract Questions is PayableOwnable {
 			//do nothing.
 			return;
 		} else if(amount > 0) { //Depositing into question free balance
-			uint roomLeftToMaxQuestionBid = controller.maxQuestionBid(rows[rowID].game)-rows[rowID].playerTotalInputs[msg.sender];
+			uint roomLeftToMaxQuestionBid =
+				controller.maxQuestionBid(rows[rowID].game) -
+				rows[rowID].playerTotalInputs[msg.sender]
+			;
 			//Cap total amount deposited to MaxQuestionBid:
 			uint cappedAmount = Math.min(
 				uint(amount), //valid cast due to being in if(amount>0) conditional block.
