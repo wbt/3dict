@@ -802,21 +802,21 @@ contract Questions is PayableOwnable {
 			//This fn exists to make sure these two state variables are always changed together:
 			rows[rowID].playerFreeBalanceOnQuestion[msg.sender] =
 				rows[rowID].playerFreeBalanceOnQuestion[msg.sender] +
-				amountToIncreaseFreeBalanceBy
+				uint(amountToIncreaseFreeBalanceBy) //valid cast in this conditional block
 			;
 			rows[rowID].freeBalanceSum =
 				rows[rowID].freeBalanceSum +
-				amountToIncreaseFreeBalanceBy
+				uint(amountToIncreaseFreeBalanceBy) //valid cast in this conditional block
 			;
 		} else {
 			//This fn exists to make sure these two state variables are always changed together:
 			rows[rowID].playerFreeBalanceOnQuestion[msg.sender] =
-				rows[rowID].playerFreeBalanceOnQuestion[msg.sender] +
-				amountToIncreaseFreeBalanceBy
+				rows[rowID].playerFreeBalanceOnQuestion[msg.sender] -
+				uint(-1*amountToIncreaseFreeBalanceBy) //valid cast in this conditional block
 			;
 			rows[rowID].freeBalanceSum =
-				rows[rowID].freeBalanceSum +
-				amountToIncreaseFreeBalanceBy
+				rows[rowID].freeBalanceSum -
+				uint(-1*amountToIncreaseFreeBalanceBy) //valid cast in this conditional block
 			;
 		}
 	}
