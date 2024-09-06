@@ -49,7 +49,8 @@ contract Questions is PayableOwnable {
 		//playerTotalInputs: uint is net amount total amount put in, in base tokens.
 		//Adjusts only on moving tokens in and out of question, not among options.
 		//Can't remove more until resolution, in case it's unresolvable and moves incl. winnings are reversed.
-		mapping(address => int) playerTotalInputs; // Might be > sum(player's positions).
+		mapping(address => uint) playerTotalInputs; // Might be > sum(player's positions), should match when including playerFreeBalanceOnQuestion.
+		mapping(address => uint) playerFreeBalanceOnQuestion; // Might be > sum(player's positions).
 		bool isResolved; //irreversible
 		bool unresolvable; //irreversible
 		bool optionsLocked; //reversible
