@@ -809,6 +809,20 @@ contract Questions is PayableOwnable {
 				uint(amountToIncreaseFreeBalanceBy) //valid cast in this conditional block
 			;
 		} else {
+			require(
+				(
+					uint(-1*amountToIncreaseFreeBalanceBy) < //valid cast in this conditional block
+					rows[rowID].playerFreeBalanceOnQuestion[msg.sender]
+				),
+				"Player free balance cannot go negative."
+			);
+			require(
+				(
+					uint(-1*amountToIncreaseFreeBalanceBy) < //valid cast in this conditional block
+					rows[rowID].freeBalanceSum
+				),
+				"Contract bug: Total free balance cannot go negative."
+			);
 			//This fn exists to make sure these two state variables are always changed together:
 			rows[rowID].playerFreeBalanceOnQuestion[msg.sender] =
 				rows[rowID].playerFreeBalanceOnQuestion[msg.sender] -
