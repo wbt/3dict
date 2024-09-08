@@ -47,7 +47,21 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
   // Get the deployed contract to interact with it after deploying.
   const app3Dict = await hre.ethers.getContract<Contract>("App3Dict", deployer);
-  console.log("Initial base token in app:", await app3Dict.baseToken());
+  const app3DictAddr = await app3Dict.getAddress();
+
+  await deploy("Games", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [deployer, app3DictAddr],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+  const games = await hre.ethers.getContract<Contract>("Games", deployer);
+  const gamesAddr = await games.getAddress();
+
+  console.log("Games deployed at:", gamesAddr);
 
   await deploy("YourContract", {
     from: deployer,

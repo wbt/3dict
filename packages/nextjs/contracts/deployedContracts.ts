@@ -768,6 +768,1192 @@ const deployedContracts = {
         isAllowedToList: "contracts/IGamesController.sol",
       },
     },
+    Games: {
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "initialOwner",
+              type: "address",
+            },
+            {
+              internalType: "contract IGamesController",
+              name: "initialController",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "OwnableInvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "OwnableUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "attempter",
+              type: "address",
+            },
+          ],
+          name: "PropertyChangeAttemptByNonLister",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "asker",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "int8",
+              name: "oldValue",
+              type: "int8",
+            },
+            {
+              indexed: false,
+              internalType: "int8",
+              name: "newValue",
+              type: "int8",
+            },
+          ],
+          name: "AskerApprovalChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "oldValue",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "newValue",
+              type: "bool",
+            },
+          ],
+          name: "CheckInRequiredChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "CheckInStartChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "contract IGamesController",
+              name: "oldValue",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "contract IGamesController",
+              name: "newValue",
+              type: "address",
+            },
+          ],
+          name: "ControllerChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "lister",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "newId",
+              type: "uint256",
+            },
+          ],
+          name: "Creation",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "oldValue",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "Descr500Changed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaidOut",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IERC20",
+              name: "tokenContract",
+              type: "address",
+            },
+          ],
+          name: "ERC20Withdrawal",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "EndTimeChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountPaidOut",
+              type: "uint256",
+            },
+          ],
+          name: "EthWithdrawal",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "oldValue",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "EventURIChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IERC20",
+              name: "oldValue",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "contract IERC20",
+              name: "newValue",
+              type: "address",
+            },
+          ],
+          name: "GameTokenChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "oldValue",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "ImageURIChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "ListEndChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "ListStartChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "oldValue",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newValue",
+              type: "address",
+            },
+          ],
+          name: "ListerChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "LocationIDChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "MaxQuestionBidChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "oldValue",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "newValue",
+              type: "bool",
+            },
+          ],
+          name: "OpenToAnyAskerChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "referee",
+              type: "address",
+            },
+          ],
+          name: "RefereeAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "referee",
+              type: "address",
+            },
+          ],
+          name: "RefereeRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint24",
+              name: "oldValue",
+              type: "uint24",
+            },
+            {
+              indexed: false,
+              internalType: "uint24",
+              name: "newValue",
+              type: "uint24",
+            },
+          ],
+          name: "SponsorFractionOfOptionPoolChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "sponsor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountAdded",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "totalSponsorshipFromThisSponsor",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "totalSponsoredAmount",
+              type: "uint256",
+            },
+          ],
+          name: "SponsorshipAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "oldValue",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "Title140Changed",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "referee",
+              type: "address",
+            },
+          ],
+          name: "addReferee",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "amountToAdd",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "sponsor",
+              type: "address",
+            },
+          ],
+          name: "addSponsorship",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "asker",
+              type: "address",
+            },
+            {
+              internalType: "int8",
+              name: "newValue",
+              type: "int8",
+            },
+          ],
+          name: "changeAskerApproval",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "newValue",
+              type: "bool",
+            },
+          ],
+          name: "changeCheckInRequired",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeCheckInStart",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IGamesController",
+              name: "newController",
+              type: "address",
+            },
+          ],
+          name: "changeController",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "changeDescr500",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeEndTime",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "changeEventURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "changeImageURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeListEnd",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeListStart",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "newValue",
+              type: "address",
+            },
+          ],
+          name: "changeLister",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeLocationID",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+          ],
+          name: "changeMaxQuestionBid",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "newValue",
+              type: "bool",
+            },
+          ],
+          name: "changeOpenToAnyAsker",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "uint24",
+              name: "newValue",
+              type: "uint24",
+            },
+          ],
+          name: "changeSponsorFractionOfOptionPool",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "newValue",
+              type: "string",
+            },
+          ],
+          name: "changeTitle140",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lister",
+              type: "address",
+            },
+          ],
+          name: "create",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "gameID",
+              type: "uint256",
+            },
+          ],
+          name: "gameToken",
+          outputs: [
+            {
+              internalType: "contract IERC20",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "gameID",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "potentialLister",
+              type: "address",
+            },
+          ],
+          name: "isAllowedToList",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "gameID",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "potentialReferee",
+              type: "address",
+            },
+          ],
+          name: "isRefereeFor",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "gameID",
+              type: "uint256",
+            },
+          ],
+          name: "maxQuestionBid",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "recipient",
+              type: "address",
+            },
+          ],
+          name: "payoutEth",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "rowID",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "referee",
+              type: "address",
+            },
+          ],
+          name: "removeReferee",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "gameID",
+              type: "uint256",
+            },
+          ],
+          name: "sponsorFractionOfOptionPool",
+          outputs: [
+            {
+              internalType: "uint24",
+              name: "",
+              type: "uint24",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "payAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IERC20",
+              name: "tokenContract",
+              type: "address",
+            },
+          ],
+          name: "withdrawERC20Tokens",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {
+        owner: "contracts/PayableOwnable.sol",
+        payoutEth: "contracts/PayableOwnable.sol",
+        renounceOwnership: "contracts/PayableOwnable.sol",
+        transferOwnership: "contracts/PayableOwnable.sol",
+        withdrawERC20Tokens: "contracts/PayableOwnable.sol",
+        gameToken: "contracts/IQuestionsController.sol",
+        isAllowedToList: "contracts/IQuestionsController.sol",
+        isRefereeFor: "contracts/IQuestionsController.sol",
+        maxQuestionBid: "contracts/IQuestionsController.sol",
+        sponsorFractionOfOptionPool: "contracts/IQuestionsController.sol",
+      },
+    },
     USDME: {
       address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [
