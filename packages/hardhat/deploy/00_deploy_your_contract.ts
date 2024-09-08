@@ -49,6 +49,16 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const app3Dict = await hre.ethers.getContract<Contract>("App3Dict", deployer);
   const app3DictAddr = await app3Dict.getAddress();
 
+  await deploy("Profiles", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [deployer],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
   await deploy("Locations", {
     from: deployer,
     // Contract constructor arguments
