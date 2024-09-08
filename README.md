@@ -1,5 +1,7 @@
 # 3Dict.app
 
+For more about the app, see https://ethglobal.com/showcase/getset-2t1c1
+
 ## Installation
 - Obtain permissions. This software is NOT LICENSED (proprietary) except that a limited license to use the software for the purpose of judging the ETHGlobal ETHOnline 2024 hackathon is granted to judges (including partner judges) during September 2024.
 - Clone this GitHub repo to your local machine.
