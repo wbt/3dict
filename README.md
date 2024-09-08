@@ -8,7 +8,7 @@ For more about the app, see https://ethglobal.com/showcase/getset-2t1c1
 - `yarn install`
 - If you're on Windows with PowerShell, you may need to run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process` in each terminal first.
 - In one terminal, `yarn chain`
-- In another, `yarn deploy`
+- In another, `yarn deploy` (for a live network, use something like `yarn deploy --network chiliz`)
 - In another, `yarn start` for the frontend.
 
 Instructions below remain from Scaffold-ETH:
